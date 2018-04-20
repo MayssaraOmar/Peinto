@@ -8,9 +8,15 @@ import java.awt.Graphics;
 
 public class Ellipse extends AbstractShape {
 	private Map<String,Double> properties = new HashMap<>();
+	
+	
 
-	public Ellipse(Point position, Color color, Color fillColor, Point positionNew, Double width, Double height) {
-		super(position, color, fillColor, positionNew);
+	public Ellipse() {
+		super();
+	}
+
+	public Ellipse(Point position, Point positionNew, Double width, Double height) {
+		super(position, positionNew);
 		properties.put("width", width);
 		properties.put("height", height);
 		this.properties = properties;

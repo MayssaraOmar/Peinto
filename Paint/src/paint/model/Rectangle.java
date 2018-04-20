@@ -9,15 +9,20 @@ import java.awt.Graphics;
 public class Rectangle extends AbstractShape {
 	private Map<String,Double> properties = new HashMap<>();
 	
-	public Rectangle(Point position, Point positionNew, Color color, Color fillColor, Double length, Double width) {
-		super(position, color, fillColor, positionNew);
+	public Rectangle(Point position, Point positionNew,  Double length, Double width) {
+		super(position, positionNew);
 		properties.put("length", length);
 		properties.put("width", width);
 		super.setProperties(properties);
 	}
 	
 
-	 public void draw(Object canvas)
+	 public Rectangle() {
+		super();
+	}
+
+
+	public void draw(Object canvas)
 	 {
 	    
 	   
