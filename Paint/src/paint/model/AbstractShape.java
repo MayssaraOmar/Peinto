@@ -70,7 +70,7 @@ public abstract class AbstractShape implements Shape , Cloneable {
 	 
 	 public Object clone() throws CloneNotSupportedException
 	 {
-		 return super.clone();
+		 return super.clone(); 
 
 	 }
 	
