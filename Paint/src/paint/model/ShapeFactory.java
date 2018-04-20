@@ -8,11 +8,9 @@ public class ShapeFactory {
 	public Shape getShape(String shapeType){
 	      	
 	      if(shapeType.equalsIgnoreCase("CIRCLE")){
-	         return new Circle();
-	         
+	          return new Circle(); 
 	      } else if( shapeType.equalsIgnoreCase("RECTANGLE")){
-	         return new Rectangle();
-	         
+	         return new Rectangle();  
 	      } else if(shapeType.equalsIgnoreCase("SQUARE")){
 	         return new Square();
 	      } else if( shapeType.equalsIgnoreCase("EllIPSE")) {
@@ -20,7 +18,6 @@ public class ShapeFactory {
 	      } else if( shapeType.equalsIgnoreCase("LineSegment")) {
 	    	  return new LineSegment();
 	      }
-	      
 	      return null;
 	   }
 

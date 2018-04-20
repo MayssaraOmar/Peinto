@@ -20,7 +20,6 @@ public abstract class AbstractShape implements Shape , Cloneable {
 	public AbstractShape(Point position, Point positionNew) {
 		this.position = position;
 		this.positionNew = positionNew;
-	
 		
 	}
 
