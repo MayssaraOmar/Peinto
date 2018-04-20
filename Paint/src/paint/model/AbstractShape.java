@@ -17,7 +17,6 @@ public abstract class AbstractShape implements Shape {
 		this.color = color;
 		this.fillColor = fillColor;
 		this.positionNew = positionNew;
-	
 		
 	}
 
