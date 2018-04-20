@@ -8,10 +8,16 @@ import java.awt.Graphics;
 
 public class LineSegment extends AbstractShape{
 	private Map<String, Double> properties = new HashMap<>();
+	
+	
 
-	public LineSegment(Point position, Color color, Color fillColor, Point positionNew) 
+	public LineSegment() {
+		super();
+	}
+
+	public LineSegment(Point position, Point positionNew) 
 	{
-		super(position, color, fillColor, positionNew);
+		super(position,  positionNew);
 		this.properties = properties;
 		super.setProperties(properties);
 	}

@@ -5,17 +5,20 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractShape implements Shape {
+public abstract class AbstractShape implements Shape , Cloneable {
 	private Point position = new Point();
 	private Point positionNew = new Point();
-	private Color color,fillColor;
+	private Color color = Color.black;
+	private Color fillColor = Color.white;
 	private Map<String,Double> properties = new HashMap<>();
 	
 	
-	public AbstractShape(Point position, Color color, Color fillColor, Point positionNew) {
+	public AbstractShape() {
+		super();
+	}
+
+	public AbstractShape(Point position, Point positionNew) {
 		this.position = position;
-		this.color = color;
-		this.fillColor = fillColor;
 		this.positionNew = positionNew;
 	
 		
@@ -67,7 +70,8 @@ public abstract class AbstractShape implements Shape {
 	 
 	 public Object clone() throws CloneNotSupportedException
 	 {
-		 return null;
+		 return super.clone();
+
 	 }
 	
 }

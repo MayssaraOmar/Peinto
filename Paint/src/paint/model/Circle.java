@@ -9,11 +9,17 @@ import java.awt.Graphics;
 public class Circle extends AbstractShape{
 	private Map<String,Double> properties = new HashMap<>();
 
-	public Circle(Point position, Color color, Color fillColor, Point positionNew, Double radius) {
-		super(position, color, fillColor, positionNew);
+	public Circle(Point position, Point positionNew, Double radius) {
+		super(position, positionNew);
 		properties.put("radius", radius);
 		this.properties = properties;
 	}
+	
+
+	public Circle() {
+		super();
+	}
+
 
 	public Map<String, Double> getProperties() {
 		return properties;

@@ -8,11 +8,20 @@ import java.util.Map;
 public class Square extends AbstractShape {
 private Map<String,Double> properties = new HashMap<>();
 
-public Square(Point position, Color color, Color fillColor, Point positionNew, Double sideLength)
+public Square(Point position, Point positionNew, Double sideLength)
 {
-	super(position, color, fillColor, positionNew);
+	super(position, positionNew);
 	properties.put("sideLength", sideLength);
 	this.properties = properties;
+}
+
+
+
+
+
+
+	public Square() {
+	super();
 }
 
 
