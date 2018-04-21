@@ -13,7 +13,7 @@ import paint.view.Canvas;
 
 
 public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
-	static Shape s;
+	Point startPoint = null, endPoint = null, midPoint = null;
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -36,27 +36,47 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		Control.startPoint = new Point(e.getPoint());
+		//if(Control.state.equalsIgnoreCase("ChooseShapeToDraw") && e.getComponent().) Control.state = "Drawing";
+		//if(Control.state.equalsIgnoreCase("Drawing")) {
+		if(Control.currentShape == null) return;
+		startPoint = new Point(e.getPoint());
+		//System.out.println(Control.startPoint.x);
+		Control.currentShape.setStartPosition(startPoint);
+		endPoint = new Point(e.getPoint());
+		Control.currentShape.setEndPosition(endPoint);
+		//}
 	
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-   	 	Control.startPoint = null;
-   	 	Control.endPoint = null;
-
-        //Canvas.getCanvas().repaint();	
+		
+		//if(Control.state.equalsIgnoreCase("Drawing")) {
+		if(Control.currentShape == null) return;
+		Control.shapes.add(Control.currentShape);
+			//Control.controlDrawingEngine.addShape((Shape)Control.currentShape);
+			Control.currentShape = null;
+	   	 	/*startPoint = null;
+	   	 	endPoint = null;
+	   	 	Control.currentShape.setPosition(startPoint);
+			Control.currentShape.setPositionNew(endPoint);*/
+	        Canvas.getCanvas().repaint();
+		//}
 	}
 
 	
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		if(Control.currentShape == null) return;
 		// TODO Auto-generated method stub
-		Control.endPoint = new Point(e.getPoint());
-		 //Control.endPoint.setLocation();
+		//if(Control.state.equalsIgnoreCase("Drawing")) {
+		endPoint = new Point(e.getPoint());
+		Control.currentShape.setEndPosition(endPoint);
+		 //updateShape(Control.currentShape, new  );
          Canvas.getCanvas().repaint();
+		//}
 		
 	}
 

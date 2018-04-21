@@ -29,7 +29,7 @@ public class Triangle extends AbstractShape{
 	}
 	public void draw(Object canvas)
 	{
-		
+		return;
 	}
 	
 }

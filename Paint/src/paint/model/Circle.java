@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.sun.javafx.geom.Point2D;
+
 import java.awt.Graphics;
 
 public class Circle extends AbstractShape{
@@ -31,8 +34,11 @@ public class Circle extends AbstractShape{
 	
 	public void draw(Object canvas)
 	{
-		
+		return;
 	}
+
+
+	
 	
 
 }

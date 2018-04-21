@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Rectangle extends AbstractShape {
 	private Map<String,Double> properties = new HashMap<>();
@@ -25,9 +26,17 @@ public class Rectangle extends AbstractShape {
 	public void draw(Object canvas)
 	 {
 	    
-	   
+		if(canvas == null || getStartPosition()==null || getEndPosition()==null) return;
+		Graphics g2D  = (Graphics2D) canvas;
+		//g2D.drawLine(getStartPosition().x, getStartPosition().y, getEndPosition().x, getEndPosition().y);
+		
+		//g2D.drawRect(getStartPosition().x, getStartPosition().y, width, height);
+		int width =  Math.abs(getStartPosition().x - getEndPosition().x);
+		int height =   Math.abs(getStartPosition().y - getEndPosition().y);
+		g2D.drawRect(getStartPosition().x, getStartPosition().y, width, height);
+		 //g2D.draw( new Rectangle2D.Double( );
 	 
-	   int  x1 = this.getPosition().x;
+	  /* int  x1 = this.getPosition().x;
 	   int x2 = this.getPositionNew().x;
 	   int y1= this.getPosition().y;
 	   int y2= this.getPosition().y;
@@ -42,7 +51,7 @@ public class Rectangle extends AbstractShape {
           int width = Math.abs(x1 - x2);
           int height = Math.abs(y1 - y2);
 
-     //return new  Rectangle2D.Float( x, y, width, height);
+     //return new  Rectangle2D.Float( x, y, width, height);*/
                 
        
 	 }

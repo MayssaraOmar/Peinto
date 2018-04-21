@@ -3,7 +3,7 @@ package paint.model;
 public interface Shape 
 {
 	
-	public void setPosition(java.awt.Point position); 
+	public void setPosition(java.awt.Point Position); 
 	public java.awt.Point getPosition(); 
 	 
 	 /* update shape specific properties (e.g., radius) */ 

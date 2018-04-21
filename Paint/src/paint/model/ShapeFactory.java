@@ -5,7 +5,7 @@ import java.awt.Point;
 
 
 public class ShapeFactory {
-	public Shape getShape(String shapeType){
+	public AbstractShape getShape(String shapeType){
 	      	
 	      if(shapeType.equalsIgnoreCase("CIRCLE")){
 	          return new Circle(); 

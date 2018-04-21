@@ -1,13 +1,12 @@
 package paint.model;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-import paint.controller.CanvasMouseAdapter;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class LineSegment extends AbstractShape{
 	private Map<String, Double> properties = new HashMap<>();
@@ -18,17 +17,17 @@ public class LineSegment extends AbstractShape{
 		super();
 	}
 
-	public LineSegment(Point position, Point positionNew) 
+	public LineSegment(Point startPoint, Point endPoint) 
 	{
-		super(position,  positionNew);
+		super(startPoint,  endPoint);
 		this.properties = properties;
 		super.setProperties(properties);
 	}
 	
 	public void draw(Object canvas){
-		
-       // g.drawLine(CanvasMouseAdapter.start.x, CanvasMouseAdapter.start.y, CanvasMouseAdapter.end.x, CanvasMouseAdapter.end.y);
-
+		if(canvas == null || getStartPosition()==null || getEndPosition()==null) return;
+		Graphics g2D  = (Graphics2D) canvas;
+		g2D.drawLine(getStartPosition().x, getStartPosition().y, getEndPosition().x, getEndPosition().y);
 	}
 
 	public Map<String, Double> getProperties() {
@@ -38,6 +37,7 @@ public class LineSegment extends AbstractShape{
 	public void setProperties(Map<String, Double> properties) {
 		this.properties = properties;
 	}
+
 	
 
 }

@@ -33,7 +33,7 @@ public class Ellipse extends AbstractShape {
 
 	public void draw(Object canvas)
 	{
-		
+		return;
 	}
 
 }
