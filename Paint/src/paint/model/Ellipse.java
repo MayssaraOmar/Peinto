@@ -2,9 +2,11 @@ package paint.model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Ellipse extends AbstractShape {
 	private Map<String,Double> properties = new HashMap<>();
@@ -33,7 +35,13 @@ public class Ellipse extends AbstractShape {
 
 	public void draw(Object canvas)
 	{
-		
+		if(canvas == null || getStartPosition()==null || getEndPosition()==null) return;
+		Graphics g2D  = (Graphics2D) canvas;
+		int width =  Math.abs(getStartPosition().x - getEndPosition().x);
+		int height =   Math.abs(getStartPosition().y - getEndPosition().y);
+		g2D.drawOval(getStartPosition().x, getStartPosition().y,
+                width,
+                height);
 	}
 
 }

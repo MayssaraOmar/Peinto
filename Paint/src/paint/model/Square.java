@@ -1,9 +1,14 @@
 package paint.model;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.sun.javafx.geom.Point2D;
 
 public class Square extends AbstractShape {
 private Map<String,Double> properties = new HashMap<>();
@@ -31,9 +36,15 @@ public Square(Point position, Point positionNew, Double sideLength)
 
 	public void draw(Object canvas)
 	 {
-	    
-	   
-	 
+		
+		 
+		if(canvas == null || getStartPosition()==null || getEndPosition()==null)  return;
+		Graphics g2D  = (Graphics2D) canvas;
+
+		int sideLength =  Math.abs(getStartPosition().x - getEndPosition().x);
+	    g2D.drawRect(getStartPosition().x, getStartPosition().y, sideLength, sideLength);
+	
+	 /*
 	   int  x1 = this.getPosition().x;
 	   int x2 = this.getPositionNew().x;
 	   int y1= this.getPosition().y;
@@ -48,9 +59,10 @@ public Square(Point position, Point positionNew, Double sideLength)
                         
           int sideLength = Math.abs(x1 - x2);
          
-                
+         */       
        
 	 }
-
-
 }
+
+
+

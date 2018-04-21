@@ -5,32 +5,51 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.javafx.geom.Point2D;
+
 public abstract class AbstractShape implements Shape , Cloneable {
-	private Point position = new Point();
-	private Point positionNew = new Point();
+	private Point startPosition = null;
+	private Point endPosition = null;
 	private Color color = Color.black;
 	private Color fillColor = Color.white;
 	private Map<String,Double> properties = new HashMap<>();
-	
-	
-	public AbstractShape() {
-		super();
-	}
-
-	public AbstractShape(Point position, Point positionNew) {
-		this.position = position;
-		this.positionNew = positionNew;
-	
+	///////////////////////////////////
+	@Override
+	public void setPosition(Point Position) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	public Point getPositionNew() {
-		return positionNew;
+	@Override
+	public Point getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	///////////////////////////////////
+	public AbstractShape() {
+		super();
+	}
+	public AbstractShape(Point position, Point positionNew) {
+		this.setStartPosition(position);
+		this.setEndPosition(positionNew);	
+	}
+	public Point getStartPosition() {
+		return startPosition;
 	}
 
-	public void setPositionNew(Point positionNew) {
-		this.positionNew = positionNew;
+	public void setStartPosition(Point startPoint) {
+		this.startPosition = startPoint;
 	}
+
+	public Point getEndPosition() {
+		return endPosition;
+	}
+
+	public void setEndPosition(Point positionNew) {
+		this.endPosition = positionNew;
+	}
+	
 
 	public Color getFillColor() {
 		return fillColor;
@@ -40,15 +59,7 @@ public abstract class AbstractShape implements Shape , Cloneable {
 		this.fillColor = fillColor;
 	}
 
-	public void setPosition(java.awt.Point position)
-	{
-		this.position = position;
-	}
 	
-	public java.awt.Point getPosition()
-	{
-		return position;
-	}
 	public void setProperties(java.util.Map<String, Double> properties)
 	{
 		this.properties = properties;
@@ -73,5 +84,6 @@ public abstract class AbstractShape implements Shape , Cloneable {
 		 return super.clone(); 
 
 	 }
+
 	
 }
