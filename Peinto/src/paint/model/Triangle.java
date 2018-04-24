@@ -1,5 +1,6 @@
 package paint.model;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Map;
@@ -27,7 +28,11 @@ public class Triangle extends AbstractShape{
 		
 		//properties.put("SideLength", (double) sideLength);
 		setProperties(properties);
+		((Graphics2D)g2D).setStroke(new BasicStroke(3));
+		g2D.setColor(this.getColor());
 		g2D.drawPolygon(arrayXpoints, arrayYpoints , 3);
+		g2D.setColor(this.getFillColor());
+		g2D.fillPolygon(arrayXpoints, arrayYpoints , 3);
 	}
 	
 }

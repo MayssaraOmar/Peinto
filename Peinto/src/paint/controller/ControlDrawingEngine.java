@@ -1,6 +1,7 @@
 package paint.controller;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,34 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
+	private ColorLabelMouseAdapter colorLabelMouseAdapter;
+	private static Color strokeColor = Color.BLACK;
+	private static Color fillColor = Color.WHITE;
 	
+	public ColorLabelMouseAdapter getColorLabelMouseAdapter() {
+		return colorLabelMouseAdapter;
+	}
+	public void setColorLabelMouseAdapter(ColorLabelMouseAdapter colorLabelMouseAdapter) {
+		this.colorLabelMouseAdapter = colorLabelMouseAdapter;
+	}
+	public static Color getStrokeColor() {
+		return strokeColor;
+	}
+	public static void setStrokeColor(Color strokeColor) {
+		ControlDrawingEngine.strokeColor = strokeColor;
+	}
+	public static Color getFillColor() {
+		return fillColor;
+	}
+	public static void setFillColor(Color fillColor) {
+		ControlDrawingEngine.fillColor = fillColor;
+	}
 	public ControlDrawingEngine() {
 		this.currentShape = null;
 		this.shapes = new ArrayList<Shape>();
 		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
+		this.setColorLabelMouseAdapter(new ColorLabelMouseAdapter (this));
 	}
 	public Shape getCurrentShape() {
 		return this.currentShape;
