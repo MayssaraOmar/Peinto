@@ -5,85 +5,69 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.javafx.geom.Point2D;
 
 public abstract class AbstractShape implements Shape , Cloneable {
-	private Point startPosition = null;
-	private Point endPosition = null;
-	private Color color = Color.black;
-	private Color fillColor = Color.white;
-	private Map<String,Double> properties = new HashMap<>();
-	///////////////////////////////////
+	private Point position;
+	private Color color;
+	private Color fillColor;
+	private Map<String,Double> properties;
 	@Override
-	public void setPosition(Point Position) {
-		// TODO Auto-generated method stub
-		
+	public void setPosition(Point position) {
+		//if(properties.get("EndPositionX") == null || properties.get("EndPositionY") == null)
+			this.position = position;
+		/*else {
+			this.position.x = Math.min(position.x, properties.get("EndPositionX").intValue());
+			this.position.y = Math.min(position.y, properties.get("EndPositionY").intValue());
+			System.out.println("GGGGGg");
+		}*/
 	}
-
 	@Override
 	public Point getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return position;
 	}
 	
 	///////////////////////////////////
 	public AbstractShape() {
-		super();
+		properties = new HashMap<>();
+		properties.put("EndPositionX", null);
+		properties.put("EndPositionY", null);
+		color = Color.black;
+		fillColor = Color.white;
 	}
-	public AbstractShape(Point position, Point positionNew) {
+	
+	/*public AbstractShape(Point position, Point positionNew) {
 		this.setStartPosition(position);
 		this.setEndPosition(positionNew);	
 	}
-	public Point getStartPosition() {
-		return startPosition;
-	}
-
-	public void setStartPosition(Point startPoint) {
-		this.startPosition = startPoint;
-	}
-
-	public Point getEndPosition() {
-		return endPosition;
-	}
-
-	public void setEndPosition(Point positionNew) {
-		this.endPosition = positionNew;
-	}
-	
+	*/
 
 	public Color getFillColor() {
 		return fillColor;
 	}
-
 	public void setFillColor(Color fillColor) {
 		this.fillColor = fillColor;
 	}
-
-	
-	public void setProperties(java.util.Map<String, Double> properties)
-	{
+	public void setColor(Color color){
+		 this.color = color;
+	}
+	public java.awt.Color getColor(){
+		 return this.color;
+	}
+	/*public void setProperty(String propertyName, Double value) {
+		properties.put(propertyName, value);
+	}
+	public Double getProperty(String propertyName) {
+		return properties.get(propertyName);
+	}*/
+	public void setProperties(Map<String, Double> properties){
 		this.properties = properties;
 	}
-	public java.util.Map<String, Double> getProperties()
-	{
+	public Map<String, Double> getProperties(){
 		return properties;
 	}
-	
-	 public void setColor(java.awt.Color color)
-	 {
-		 this.color = color;
-	 }
-	 public java.awt.Color getColor()
-	 {
-		 return this.color;
-	 }
-	 
-	 
-	 public Object clone() throws CloneNotSupportedException
-	 {
-		 return super.clone(); 
-
-	 }
+	public Object clone() throws CloneNotSupportedException{
+		return super.clone(); 
+	}
 
 	
 }

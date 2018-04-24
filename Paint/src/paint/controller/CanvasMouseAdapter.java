@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import paint.model.Shape;
 import paint.view.Canvas;
@@ -13,8 +15,13 @@ import paint.view.Canvas;
 
 
 public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
-	Point startPoint = null, endPoint = null, midPoint = null;
-
+	private Point startPoint = null, endPoint = null, midPoint = null;
+	private ControlDrawingEngine controlDrawingEngine;
+	
+	public CanvasMouseAdapter(ControlDrawingEngine controlDrawingEngine){
+		this.controlDrawingEngine = controlDrawingEngine;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -35,50 +42,40 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		//if(Control.state.equalsIgnoreCase("ChooseShapeToDraw") && e.getComponent().) Control.state = "Drawing";
 		//if(Control.state.equalsIgnoreCase("Drawing")) {
-		if(Control.currentShape == null) return;
+		if(controlDrawingEngine.getCurrentShape() == null) 
+			return;
 		startPoint = new Point(e.getPoint());
-		//System.out.println(Control.startPoint.x);
-		Control.currentShape.setStartPosition(startPoint);
+		controlDrawingEngine.getCurrentShape().setPosition(startPoint);
 		endPoint = new Point(e.getPoint());
-		Control.currentShape.setEndPosition(endPoint);
-		//}
-	
+		Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
+		properties.put("EndPositionX", (double) endPoint.x);
+		properties.put("EndPositionY", (double) endPoint.y);
+		controlDrawingEngine.getCurrentShape().setProperties(properties);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-		//if(Control.state.equalsIgnoreCase("Drawing")) {
-		if(Control.currentShape == null) return;
-		Control.shapes.add(Control.currentShape);
-			//Control.controlDrawingEngine.addShape((Shape)Control.currentShape);
-			Control.currentShape = null;
-	   	 	/*startPoint = null;
-	   	 	endPoint = null;
-	   	 	Control.currentShape.setPosition(startPoint);
-			Control.currentShape.setPositionNew(endPoint);*/
-			
-	        Canvas.getCanvas().repaint();
-		//}
+		if(controlDrawingEngine.getCurrentShape() == null) 
+			return;
+		controlDrawingEngine.addShape(controlDrawingEngine.getCurrentShape());
+		controlDrawingEngine.setCurrentShape(null);
+	    Canvas.getCanvas(controlDrawingEngine).repaint();
 	}
 
 	
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(Control.currentShape == null) return;
-		// TODO Auto-generated method stub
-		//if(Control.state.equalsIgnoreCase("Drawing")) {
+		if(controlDrawingEngine.getCurrentShape() == null) 
+			return;
 		endPoint = new Point(e.getPoint());
-		Control.currentShape.setEndPosition(endPoint);
-		 //updateShape(Control.currentShape, new  );
-         Canvas.getCanvas().repaint();
-		//}
-		
+		Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
+		properties.put("EndPositionX", (double) endPoint.x);
+		properties.put("EndPositionY", (double) endPoint.y);
+		controlDrawingEngine.getCurrentShape().setProperties(properties);
+        Canvas.getCanvas(controlDrawingEngine).repaint();	
 	}
 
 	@Override

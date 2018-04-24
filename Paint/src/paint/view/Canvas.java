@@ -16,35 +16,35 @@ import paint.model.Shape;
 
 public class Canvas extends JPanel {
 
-	
+	private ControlDrawingEngine viewController = new ControlDrawingEngine();
+
 	// Singleton DP 
 	private static Canvas canvasInstance = null;
-	public static Canvas getCanvas() {
+	public static Canvas getCanvas(ControlDrawingEngine viewController) {
 		if(canvasInstance == null)
-			canvasInstance = new Canvas();
+			canvasInstance = new Canvas(viewController);
 		return canvasInstance;
 	}
 	
-	private Canvas(){
+	private Canvas(ControlDrawingEngine viewController){
 		super();
 		super.setBackground(Color.WHITE);
 		super.setBounds(143, 105, 623, 383);
-		addMouseListener(ControlView.control.canvasMouseAdapter);
-		addMouseMotionListener( ControlView.control.canvasMouseAdapter);
+		this.viewController = viewController;
+		addMouseListener(viewController.getCanvasMouseAdapter());
+		addMouseMotionListener(viewController.getCanvasMouseAdapter());
 		
 	}
 	
 	@Override 
-	public void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2D = (Graphics2D) g;
-		 RenderingHints rh = new RenderingHints(
-	             RenderingHints.KEY_ANTIALIASING,
-	             RenderingHints.VALUE_ANTIALIAS_ON);
-		 g2D.setRenderingHints(rh);
+		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHints(rh);
 		
-		ControlView.control.controlDrawingEngine.refresh(g2D);
-		ControlView.control.controlDrawingEngine.drawCurrentShape(g2D);
+		viewController.refresh(g2D);
+		viewController.drawCurrentShape(g2D);
 		// draw current 
     }
 	

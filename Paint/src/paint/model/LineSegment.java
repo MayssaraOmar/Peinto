@@ -9,35 +9,25 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class LineSegment extends AbstractShape{
-	private Map<String, Double> properties = new HashMap<>();
 	
-	
-
 	public LineSegment() {
 		super();
 	}
 
-	public LineSegment(Point startPoint, Point endPoint) 
+	/*public LineSegment(Point startPoint, Point endPoint) 
 	{
 		super(startPoint,  endPoint);
 		this.properties = properties;
 		super.setProperties(properties);
-	}
+	}*/
 	
 	public void draw(Object canvas){
-		if(canvas == null || getStartPosition()==null || getEndPosition()==null) return;
+		Map<String,Double> properties = getProperties();
+		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
 		Graphics g2D  = (Graphics2D) canvas;
-		g2D.drawLine(getStartPosition().x, getStartPosition().y, getEndPosition().x, getEndPosition().y);
+		g2D.drawLine(getPosition().x, getPosition().y, properties.get("EndPositionX").intValue(), properties.get("EndPositionY").intValue());
 	}
-
-	public Map<String, Double> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Map<String, Double> properties) {
-		this.properties = properties;
-	}
-
 	
 
 }

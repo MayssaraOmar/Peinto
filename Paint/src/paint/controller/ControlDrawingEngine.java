@@ -1,33 +1,63 @@
 package paint.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
-
-import paint.model.AbstractShape;
+import java.util.Map;
 import paint.model.Shape;
 
 public class ControlDrawingEngine implements DrawingEngine {
+	private Shape currentShape;
+	private ArrayList<Shape> shapes;
+	private CanvasMouseAdapter canvasMouseAdapter;
+	private DrawShapeMouseAdapter drawShapeMouseAdapter;
 	
-	@Override
-	public void refresh(Object canvas) {
-		System.out.println(Control.shapes.size());
-		for(Shape shape : Control.shapes) {
-			shape.draw(canvas);
-		}
-		
+	public ControlDrawingEngine() {
+		this.currentShape = null;
+		this.shapes = new ArrayList<Shape>();
+		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
+		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
+	}
+	public Shape getCurrentShape() {
+		return this.currentShape;
+	}
+	public void setCurrentShape(Shape shape) {
+		this.currentShape = shape;
 	}
 	public void drawCurrentShape(Object canvas) {
-		
-		if(Control.currentShape == null || Control.currentShape.getStartPosition() == null || Control.currentShape.getEndPosition( )== null) return;
-		
-		Control.currentShape.draw(canvas);
-		//Graphics g2D  = (Graphics2D) canvas;
-		//g2D.drawLine(Control.startPoint.x, Control.startPoint.y, Control.endPoint.x, Control.endPoint.y);
+		if(getCurrentShape() == null ) 
+			return;
+		Map<String, Double> properties = getCurrentShape().getProperties();
+		if(getCurrentShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionX") == null) 
+			return;
+		getCurrentShape().draw(canvas);	
 	}
-
+	public CanvasMouseAdapter getCanvasMouseAdapter() {
+		return canvasMouseAdapter;
+	}
+	public void setCanvasMouseAdapter(CanvasMouseAdapter canvasMouseAdapter) {
+		this.canvasMouseAdapter = canvasMouseAdapter;
+	}
+	public DrawShapeMouseAdapter getDrawShapeMouseAdapter() {
+		return drawShapeMouseAdapter;
+	}
+	public void setDrawShapeMouseAdapter(DrawShapeMouseAdapter drawShapeMouseAdapter) {
+		this.drawShapeMouseAdapter = drawShapeMouseAdapter;
+	}
+	@Override
+	public void refresh(Object canvas) {
+		System.out.println(shapes.size());
+		for(Shape shape : shapes) {
+			shape.draw(canvas);
+		}	
+	}
 	@Override
 	public void addShape(Shape shape) {
-		Control.shapes.add((AbstractShape) shape);
+		shapes.add(shape);
+		/*Map<String,Double> m = new HashMap<>();
+		if(getCurrentShape()!=null) { 		m=getCurrentShape().getProperties();
+
+		System.out.println(m.get("EndPositionX") + " " + m.get("EndPositionY") + " " + m.get("Radius"));}*/
 	}
 
 	@Override
@@ -40,14 +70,11 @@ public class ControlDrawingEngine implements DrawingEngine {
 	public void updateShape(Shape oldShape, Shape newShape) {
 		oldShape.getProperties().putAll( newShape.getProperties() ) ;
 	}
-	/*public void updateShape(Shape oldShape, Shape newShape) {
-		oldShape.getProperties().putAll( newShape.getProperties() ) ;
-	}*/
-
+	
 	@Override
 	public Shape[] getShapes() {
-		// TODO Auto-generated method stub
-		return null;
+		Shape[] shapesArray = shapes.toArray(new Shape[shapes.size()]);
+		return shapesArray;
 	}
 
 	@Override

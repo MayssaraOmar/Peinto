@@ -9,38 +9,36 @@ import java.util.Map;
 
 public class Triangle extends AbstractShape{
 
-	private Map<String,Double> properties = new HashMap<>();
 
-	public Triangle(Point position, Point positionNew, Point thirdPoint) {
+	/*public Triangle(Point position, Point positionNew, Point thirdPoint) {
 		super(position, positionNew);
 		properties.put("thirdPointX", thirdPoint.getX()); //Triangle needs 3 points to be drawn which are position, positionNew and third point
 		properties.put("thirdPointY", thirdPoint.getY());
 		this.properties = properties;
-	}
+	}*/
 
 	public Triangle() {
 		super();
 	}
 
-	public Map<String, Double> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Map<String, Double> properties) {
-		this.properties = properties;
-	}
 	public void draw(Object canvas)
 	{
-		if(canvas == null || getStartPosition()==null || getEndPosition()==null)  return;
+		Map<String,Double> properties = getProperties();
+		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
 		Graphics g2D  = (Graphics2D) canvas;
+		
 		int[] arrayXpoints = new int[3];
 		int[] arrayYpoints = new int[3];
-		arrayXpoints[0] = getStartPosition().x;
-		arrayXpoints[1] = getEndPosition().x;
-		arrayYpoints[0] = getStartPosition().y;
-		arrayYpoints[1] = getEndPosition().y;
-		arrayXpoints[2] = getEndPosition().x;
-		arrayYpoints[2]=getStartPosition().y;
+		arrayXpoints[0] = getPosition().x;
+		arrayXpoints[1] = properties.get("EndPositionX").intValue();
+		arrayYpoints[0] = getPosition().y;
+		arrayYpoints[1] = properties.get("EndPositionY").intValue();
+		arrayXpoints[2] = properties.get("EndPositionX").intValue();
+		arrayYpoints[2]=getPosition().y;
+		
+		//properties.put("SideLength", (double) sideLength);
+		setProperties(properties);
 		g2D.drawPolygon(arrayXpoints, arrayYpoints , 3);
 		
 

@@ -1,5 +1,7 @@
 package paint.model;
 
+import java.awt.Point;
+
 public interface Shape 
 {
 	
@@ -20,6 +22,6 @@ public interface Shape
 	 *       for swing, you will cast canvas to java.awt.Graphics */ 
 	public void draw(Object canvas); 
 	/* create a deep clone of the shape */ 
-	public Object clone() throws CloneNotSupportedException;  
+	public Object clone() throws CloneNotSupportedException;
 
 }

@@ -1,22 +1,18 @@
 package paint.model;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Rectangle extends AbstractShape {
-	private Map<String,Double> properties = new HashMap<>();
 	
-	public Rectangle(Point position, Point positionNew,  Double length, Double width) {
+	/*public Rectangle(Point position, Point positionNew,  Double length, Double width) {
 		super(position, positionNew);
 		properties.put("length", length);
 		properties.put("width", width);
 		super.setProperties(properties);
-	}
+	}*/
 	
 
 	 public Rectangle() {
@@ -27,15 +23,40 @@ public class Rectangle extends AbstractShape {
 	public void draw(Object canvas)
 	 {
 	    
-		if(canvas == null || getStartPosition()==null || getEndPosition()==null)  return;
-		Graphics g2D  = (Graphics2D) canvas;
-		//g2D.drawLine(getStartPosition().x, getStartPosition().y, getEndPosition().x, getEndPosition().y);
+		Map<String,Double> properties = getProperties();
 		
-		//g2D.drawRect(getStartPosition().x, getStartPosition().y, width, height);
-		int width =  Math.abs(getStartPosition().x - getEndPosition().x);
-		int height =   Math.abs(getStartPosition().y - getEndPosition().y);
-	   // g2D.drawRect(getStartPosition().x, getStartPosition().y, width, height);
-		((Graphics2D)g2D).draw(new Rectangle2D.Double(getStartPosition().x, getStartPosition().y, width, height));
+		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
+		
+		Graphics g2D  = (Graphics2D) canvas;
+		
+		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
+		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
+		int width =  Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
+		int height =   Math.abs(getPosition().y - properties.get("EndPositionY").intValue());
+	    g2D.drawRect(x, y, width, height);
+
+		properties.put("Width", (double) width);
+		properties.put("Height", (double) height);
+		setProperties(properties);
+		//((Graphics2D) g2D).draw(new Rectangle2D.Double( Math.min(getStartPosition().x , getEndPosition().x),  Math.min(getStartPosition().y ,getEndPosition().y), width, height));
+
+/*
+ * public int getWidth() {
+    return (Math.abs(x2 - x1));
+}
+
+public int getHeight() {
+    return (Math.abs(y2 - y1));
+}
+
+public int getUpperLeftX() {
+    return (Math.min(x1, x2));
+}
+
+public int getUpperLeftY() {
+    return (Math.min(y1, y2));
+}*/
 	   
 
 	 
