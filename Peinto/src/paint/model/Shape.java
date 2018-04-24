@@ -3,7 +3,7 @@ package paint.model;
 public interface Shape 
 {
 	
-	public void setPosition(java.awt.Point position); 
+	public void setPosition(java.awt.Point Position); 
 	public java.awt.Point getPosition(); 
 	 
 	 /* update shape specific properties (e.g., radius) */ 
@@ -19,7 +19,8 @@ public interface Shape
 	/* redraw the shape on the canvas,    
 	 *       for swing, you will cast canvas to java.awt.Graphics */ 
 	public void draw(Object canvas); 
+	
 	/* create a deep clone of the shape */ 
-	public Object clone() throws CloneNotSupportedException;  
+	public Object clone() throws CloneNotSupportedException;
 
 }

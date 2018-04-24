@@ -1,50 +1,33 @@
 package paint.model;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Rectangle extends AbstractShape {
-	private Map<String,Double> properties = new HashMap<>();
 	
-	public Rectangle(Point position, Point positionNew,  Double length, Double width) {
-		super(position, positionNew);
-		properties.put("length", length);
-		properties.put("width", width);
-		super.setProperties(properties);
-	}
-	
-
 	 public Rectangle() {
 		super();
 	}
 
+	public void draw(Object canvas) {
+		Map<String,Double> properties = getProperties();
+		
+		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
+		
+		Graphics g2D  = (Graphics2D) canvas;
+		
+		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
+		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
+		int width =  Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
+		int height =   Math.abs(getPosition().y - properties.get("EndPositionY").intValue());
+	    g2D.drawRect(x, y, width, height);
 
-	public void draw(Object canvas)
-	 {
-	    
-	   
-	 
-	   int  x1 = this.getPosition().x;
-	   int x2 = this.getPositionNew().x;
-	   int y1= this.getPosition().y;
-	   int y2= this.getPosition().y;
-       // Get the top left hand corner for the shape
-       // Math.min returns the points closest to 0
-                	
-       int x = Math.min(x1, x2);
-       int y = Math.min(y1, y2);
-                        
-        // Gets the difference between the coordinates and 
-                        
-          int width = Math.abs(x1 - x2);
-          int height = Math.abs(y1 - y2);
-
-     //return new  Rectangle2D.Float( x, y, width, height);
-                
-       
+		properties.put("Width", (double) width);
+		properties.put("Height", (double) height);
+		setProperties(properties);    
 	 }
 
 }

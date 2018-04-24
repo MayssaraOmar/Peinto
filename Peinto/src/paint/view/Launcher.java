@@ -2,10 +2,7 @@ package paint.view;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
 public class Launcher {
-
 
 	/**
 	 * Launch the application.

@@ -1,42 +1,26 @@
 package paint.model;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.util.HashMap;
 import java.util.Map;
 
-import paint.controller.CanvasMouseAdapter;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class LineSegment extends AbstractShape{
-	private Map<String, Double> properties = new HashMap<>();
 	
-	
-
 	public LineSegment() {
 		super();
 	}
-
-	public LineSegment(Point position, Point positionNew) 
-	{
-		super(position,  positionNew);
-		this.properties = properties;
-		super.setProperties(properties);
-	}
 	
 	public void draw(Object canvas){
+		Map<String,Double> properties = getProperties();
 		
-       // g.drawLine(CanvasMouseAdapter.start.x, CanvasMouseAdapter.start.y, CanvasMouseAdapter.end.x, CanvasMouseAdapter.end.y);
-
-	}
-
-	public Map<String, Double> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Map<String, Double> properties) {
-		this.properties = properties;
+		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
+		
+		Graphics g2D  = (Graphics2D) canvas;
+		
+		g2D.drawLine(getPosition().x, getPosition().y, properties.get("EndPositionX").intValue(), properties.get("EndPositionY").intValue());
 	}
 	
 

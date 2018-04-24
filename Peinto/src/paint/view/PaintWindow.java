@@ -1,15 +1,27 @@
 package paint.view;
 
 import paint.controller.CanvasMouseAdapter;
+import paint.controller.Control;
+import paint.controller.ControlDrawingEngine;
+
+import java.awt.Component;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class PaintWindow {
-
+	
+	private ControlDrawingEngine viewController = new ControlDrawingEngine();
 	private JFrame frame;
-	Canvas canvas = Canvas.getCanvas();
+	private Canvas canvas = Canvas.getCanvas(viewController);
 	private final JLabel lblLine = new JLabel("Line");
+	private final JLabel lblPeinto = new JLabel("Peinto");
+	private final JLabel lblRectangle = new JLabel("rectangle");
+	private final JLabel lblCircle = new JLabel("circle");
+	private final JLabel lblSquare = new JLabel("Square");
+	private final JLabel lblEllipse = new JLabel("Ellipse");
+	private final JLabel lblTriangle = new JLabel("Triangle");
+
 
 
 	/**
@@ -31,12 +43,38 @@ public class PaintWindow {
 		canvas.setLocation(143, 98);
 		frame.getContentPane().add(canvas);
 		
-		lblLine.addMouseListener(new CanvasMouseAdapter());
+		lblLine.addMouseListener(viewController.getDrawShapeMouseAdapter());
 		lblLine.setBounds(39, 183, 56, 16);
-		
 		lblLine.setName("Line");
 		
 		frame.getContentPane().add(lblLine);
+		lblPeinto.setBounds(77, 37, 56, 16);
+		frame.getContentPane().add(lblPeinto);
+		
+		lblRectangle.addMouseListener(viewController.getDrawShapeMouseAdapter());
+		lblRectangle.setName("rectangle");
+		lblRectangle.setBounds(39, 215, 71, 16);
+		frame.getContentPane().add(lblRectangle);
+		
+		lblCircle.addMouseListener(viewController.getDrawShapeMouseAdapter());
+		lblCircle.setName("circle");
+		lblCircle.setBounds(39, 268, 71, 16);
+		frame.getContentPane().add(lblCircle);
+		
+		lblSquare.addMouseListener(viewController.getDrawShapeMouseAdapter());
+		lblSquare.setName("square");
+		lblSquare.setBounds(39, 297, 71, 16);
+		frame.getContentPane().add(lblSquare);
+		
+		lblEllipse.addMouseListener(viewController.getDrawShapeMouseAdapter());
+		lblEllipse.setName("Ellipse");
+		lblEllipse.setBounds(39, 326, 71, 16);
+		frame.getContentPane().add(lblEllipse);
+		
+		lblTriangle.addMouseListener(viewController.getDrawShapeMouseAdapter());
+		lblTriangle.setName("triangle");
+		lblTriangle.setBounds(39, 244, 71, 16);
+		frame.getContentPane().add(lblTriangle);
 		
 	}
 
