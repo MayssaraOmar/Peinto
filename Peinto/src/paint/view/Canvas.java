@@ -2,37 +2,50 @@ package paint.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
+import java.awt.Graphics2D;
+import java.awt.List;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import paint.controller.CanvasMouseAdapter;
+import paint.controller.Control;
+import paint.controller.ControlDrawingEngine;
+import paint.model.Shape;
 
 public class Canvas extends JPanel {
 
-	ArrayList shapes =new ArrayList();
-	
+	private ControlDrawingEngine viewController = new ControlDrawingEngine();
+
 	// Singleton DP 
 	private static Canvas canvasInstance = null;
-	public static Canvas getCanvas() {
+	public static Canvas getCanvas(ControlDrawingEngine viewController) {
 		if(canvasInstance == null)
-			canvasInstance = new Canvas();
+			canvasInstance = new Canvas(viewController);
 		return canvasInstance;
 	}
 	
-	private Canvas(){
+	private Canvas(ControlDrawingEngine viewController){
 		super();
 		super.setBackground(Color.WHITE);
 		super.setBounds(143, 105, 623, 383);
-		addMouseListener(new CanvasMouseAdapter());
-		addMouseMotionListener(new CanvasMouseAdapter());
+		this.viewController = viewController;
+		addMouseListener(viewController.getCanvasMouseAdapter());
+		addMouseMotionListener(viewController.getCanvasMouseAdapter());
+		
 	}
 	
 	@Override 
-	public void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-       
+		Graphics2D g2D = (Graphics2D) g;
+		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHints(rh);
+		
+		viewController.refresh(g2D);
+		viewController.drawCurrentShape(g2D);
+		// draw current 
     }
 	
 }

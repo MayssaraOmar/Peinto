@@ -5,72 +5,49 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public abstract class AbstractShape implements Shape , Cloneable {
-	private Point position = new Point();
-	private Point positionNew = new Point();
-	private Color color = Color.black;
-	private Color fillColor = Color.white;
-	private Map<String,Double> properties = new HashMap<>();
-	
+	private Point position;
+	private Color color;
+	private Color fillColor;
+	private Map<String,Double> properties;
 	
 	public AbstractShape() {
-		super();
+		properties = new HashMap<>();
+		properties.put("EndPositionX", null);
+		properties.put("EndPositionY", null);
+		color = Color.black;
+		fillColor = Color.white;
 	}
-
-	public AbstractShape(Point position, Point positionNew) {
-		this.position = position;
-		this.positionNew = positionNew;
-		
+	@Override
+	public void setPosition(Point position) {
+			this.position = position;
 	}
-
-	public Point getPositionNew() {
-		return positionNew;
+	@Override
+	public Point getPosition() {
+		return position;
 	}
-
-	public void setPositionNew(Point positionNew) {
-		this.positionNew = positionNew;
-	}
-
 	public Color getFillColor() {
 		return fillColor;
 	}
-
 	public void setFillColor(Color fillColor) {
 		this.fillColor = fillColor;
 	}
-
-	public void setPosition(java.awt.Point position)
-	{
-		this.position = position;
+	public void setColor(Color color){
+		 this.color = color;
 	}
-	
-	public java.awt.Point getPosition()
-	{
-		return position;
+	public java.awt.Color getColor(){
+		 return this.color;
 	}
-	public void setProperties(java.util.Map<String, Double> properties)
-	{
+	public void setProperties(Map<String, Double> properties){
 		this.properties = properties;
 	}
-	public java.util.Map<String, Double> getProperties()
-	{
+	public Map<String, Double> getProperties(){
 		return properties;
 	}
-	
-	 public void setColor(java.awt.Color color)
-	 {
-		 this.color = color;
-	 }
-	 public java.awt.Color getColor()
-	 {
-		 return this.color;
-	 }
-	 
-	 
-	 public Object clone() throws CloneNotSupportedException
-	 {
-		 return super.clone(); 
+	public Object clone() throws CloneNotSupportedException{
+		return super.clone(); 
+	}
 
-	 }
 	
 }
