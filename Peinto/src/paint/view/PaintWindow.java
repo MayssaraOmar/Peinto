@@ -30,7 +30,9 @@ public class PaintWindow {
     private final JLabel lblfillColor = new JLabel("set fill color");
     private final JLabel lblselect = new JLabel("select");
     private final JLabel lbldeselect = new JLabel("deselect");
-    private final JLabel lblMove = new JLabel("move");
+    private final JLabel lblCopy = new JLabel("copy");
+    private final JLabel lbldelete = new JLabel("delete");
+    private final JLabel lblResize = new JLabel("resize");
     
     
 
@@ -127,7 +129,7 @@ public class PaintWindow {
 		
 		
 		
-		lbldeselect.setBounds(39, 451, 46, 14);
+		lbldeselect.setBounds(39, 439, 46, 14);
 		frame.getContentPane().add(lbldeselect);
 		lbldeselect.setName("deselect");
 		lbldeselect.addMouseListener(new MouseAdapter() {
@@ -136,16 +138,19 @@ public class PaintWindow {
 				viewController.setSelected(false);
 			}
 		});
+		lblCopy.setBounds(39, 464, 46, 14);
+		lblCopy.addMouseListener(viewController.getCopyMouseAdapter());
 		
 		
-		lblMove.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				viewController.setMove(true);
-			}
-		});
-		lblMove.setBounds(39, 476, 46, 14);
-		frame.getContentPane().add(lblMove);
+		frame.getContentPane().add(lblCopy);
+		lbldelete.setBounds(36, 495, 46, 14);
+		
+		frame.getContentPane().add(lbldelete);
+		lblResize.setBounds(39, 158, 46, 14);
+		lblResize.addMouseListener(null);
+		
+		frame.getContentPane().add(lblResize);
+		lbldelete.addMouseListener(viewController.getDeleteMouseAdapter());
 		
 		
 		

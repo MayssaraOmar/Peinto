@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import paint.model.Shape;
 import paint.view.Canvas;
+import paint.controller.*;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
@@ -18,7 +19,9 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
-	private boolean move = false;
+	private CopyMouseAdapter copyMouseAdapter;
+	private DeleteMouseAdapter deleteMouseAdapter;
+	
 
 	private UndoRedoMouseAdapter undoRedoMouseAdapter;
 	private Originator originator;
@@ -36,11 +39,12 @@ public class ControlDrawingEngine implements DrawingEngine {
 	
 	
 	
-	public boolean isMove() {
-		return move;
+	
+	public DeleteMouseAdapter getDeleteMouseAdapter() {
+		return deleteMouseAdapter;
 	}
-	public void setMove(boolean move) {
-		this.move = move;
+	public void setDeleteMouseAdapter(DeleteMouseAdapter deleteMouseAdapter) {
+		this.deleteMouseAdapter = deleteMouseAdapter;
 	}
 	public ArrayList<Shape> getSelectedShapes() {
 		return selectedShapes;
@@ -93,11 +97,19 @@ public class ControlDrawingEngine implements DrawingEngine {
 	public static void setFillColor(Color fillColor) {
 		ControlDrawingEngine.fillColor = fillColor;
 	}
+	public CopyMouseAdapter getCopyMouseAdapter() {
+		return copyMouseAdapter;
+	}
+	public void setCopyMouseAdapter(CopyMouseAdapter copyMouseAdapter) {
+		this.copyMouseAdapter = copyMouseAdapter;
+	}
 	public ControlDrawingEngine() {
 		this.currentShape = null;
 		this.shapes = new ArrayList<Shape>();
 		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
+		this.setCopyMouseAdapter(new CopyMouseAdapter (this));
+		this.setDeleteMouseAdapter(new DeleteMouseAdapter (this));
 
 		this.setUndoRedoMouseAdapter(new UndoRedoMouseAdapter (this));
 		this.setOriginator(new Originator());
@@ -164,23 +176,45 @@ public class ControlDrawingEngine implements DrawingEngine {
 		for(Shape shape : shapes) {
 			shape.draw(canvas);
 		}
-		
-		
 	}
-	//public void refreshSelected(Object canvas) {
-		//for( Shape shape: selectedArrayList ) {
-		//	shape.drawS(canvas);
-		//}
-	//}
-//	public void drawCurrentSelectedShape( Object canvas)
-	//{
-	//	if(getCurrentSelectedShape() == null ) 
-	//		return;
-		//Map<String, Double> properties = getCurrentSelectedShape().getProperties();
-	//	if(getCurrentSelectedShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
-		//	return;
-	//	getCurrentSelectedShape().drawS(canvas);	
-	//}
+	public void copy()
+	{
+		
+		if(  state!=null && state.equalsIgnoreCase("Copying") )
+		{
+			for(int i=0; i< shapes.size() ; i++ )
+			{
+				try {
+					if( shapes.get(i).getProperties().get("selected") == 1.0 )
+					{
+						currentShape = ((Shape)shapes.get(i).clone());
+						Map<String, Double> properties = currentShape.getProperties();
+						properties.put("selected", 0.0);
+						currentShape.setProperties(properties);
+						addShape(currentShape );
+						currentShape = null;
+						Canvas.getCanvas(this).repaint();
+					}
+			    } catch(Exception ex) {
+					System.out.println("clone error");
+				}
+	         }
+		}
+	}
+	public void delete() {
+		if( state!=null && state.equalsIgnoreCase("Deletingw eltanya ") )
+		{
+			for(int i=0; i< shapes.size() ; i++ )
+			{
+				if( shapes.get(i).getProperties().get("selected") == 1.0)
+				{
+				removeShape(shapes.get(i));
+				Canvas.getCanvas(this).repaint();
+				}
+			}
+		}
+	}
+
 	@Override
 	public void addShape(Shape shape) {
 		shapes.add(shape);
