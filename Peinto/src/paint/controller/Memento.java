@@ -13,6 +13,7 @@ public class Memento {
 		// Deep copy of object shape and its map: makes copies of dynamically allocated memory pointed to by the fields 
 		for(Shape shape: shapesState)
 			try {
+
 				this.shapesState.add((Shape) shape.clone());
 				Map<String, Double> map = new HashMap<>(shape.getProperties());
 				this.shapesState.get(this.shapesState.size()-1).setProperties(map);

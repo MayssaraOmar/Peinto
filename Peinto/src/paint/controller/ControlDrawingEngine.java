@@ -1,9 +1,6 @@
 package paint.controller;
 
 
-
-import java.awt.event.MouseListener;
-
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -11,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import paint.model.Shape;
 import paint.view.Canvas;
-import paint.controller.*;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
@@ -58,13 +54,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 			return;
 		getCurrentShape().draw(canvas);	
 	}
-	
-	@Override
-	public void refresh(Object canvas) {
-		for(Shape shape : shapes) {
-			shape.draw(canvas);
-		}
-	}
+
 	public void copy()
 	{
 		
@@ -90,7 +80,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 		}
 	}
 	public void delete() {
-		if( state!=null && state.equalsIgnoreCase("Deletingw eltanya ") )
+		if( state!=null && state.equalsIgnoreCase("Deleting") )
 		{
 			for(int i=0; i< shapes.size() ; i++ )
 			{

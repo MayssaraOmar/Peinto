@@ -32,8 +32,8 @@ public class PaintWindow {
   private final JLabel lblSelect = new JLabel("select");
   private final JLabel lblDeselect = new JLabel("deselect");
   private final JLabel lblCopy = new JLabel("copy");
-  private final JLabel lblDelete = new JLabel("delete");
   private final JLabel lblResize = new JLabel("resize");
+  private final JLabel lblDelete = new JLabel("delete");
     
     
 
@@ -68,12 +68,12 @@ public class PaintWindow {
 		
 		lblRectangle.addMouseListener(viewController.getDrawShapeMouseAdapter());
 		lblRectangle.setName("rectangle");
-		lblRectangle.setBounds(39, 215, 71, 16);
+		lblRectangle.setBounds(39, 212, 71, 16);
 		frame.getContentPane().add(lblRectangle);
 		
 		lblCircle.addMouseListener(viewController.getDrawShapeMouseAdapter());
 		lblCircle.setName("circle");
-		lblCircle.setBounds(39, 268, 71, 16);
+		lblCircle.setBounds(39, 270, 71, 16);
 		frame.getContentPane().add(lblCircle);
 		
 		lblSquare.addMouseListener(viewController.getDrawShapeMouseAdapter());
@@ -88,7 +88,7 @@ public class PaintWindow {
 		
 		lblTriangle.addMouseListener(viewController.getDrawShapeMouseAdapter());
 		lblTriangle.setName("triangle");
-		lblTriangle.setBounds(39, 244, 71, 16);
+		lblTriangle.setBounds(39, 241, 71, 16);
 		frame.getContentPane().add(lblTriangle);
 	
 		lblRedo.addMouseListener(viewController.getBasicCommandsMouseAdapter());
@@ -108,19 +108,19 @@ public class PaintWindow {
 		frame.getContentPane().add(lblStrokeColor);
 		
 		
-		lblfillColor.setBounds(39, 389, 94, 14);
+		lblfillColor.setBounds(39, 378, 94, 14);
 		lblfillColor.addMouseListener(viewController.getColorLabelMouseAdapter() );
 		lblfillColor.setName("fill color");
 		frame.getContentPane().add(lblfillColor);
 		
 		lblSelect.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		lblSelect.setName("select");
-		lblSelect.setBounds(39, 434, 56, 16);
+		lblSelect.setBounds(39, 405, 56, 16);
 		frame.getContentPane().add(lblSelect);
 		
 		lblDeselect.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		lblDeselect.setName("deselect");
-		lblDeselect.setBounds(39, 457, 56, 16);
+		lblDeselect.setBounds(39, 434, 56, 16);
 		frame.getContentPane().add(lblDeselect);
     
     lblMove.addMouseListener(viewController.getEditMouseAdapter());
@@ -129,19 +129,19 @@ public class PaintWindow {
 		frame.getContentPane().add(lblMove);
     
     lblCopy.addMouseListener(viewController.getEditMouseAdapter());
-    lblCopy.setBounds(39, 464, 46, 14);
+    lblCopy.setBounds(75, 463, 46, 14);
     lblCopy.setName("copy");
 		frame.getContentPane().add(lblCopy);
-    
-    lblDelete.addMouseListener(viewController.getEditMouseAdapter());
-    lblDelete.setBounds(36, 495, 46, 14);
-    lblDelete.setName("delete");
-		frame.getContentPane().add(lbldelete);
 		
     lblResize.addMouseListener(viewController.getEditMouseAdapter());
     lblResize.setBounds(39, 158, 46, 14);
     lblResize.setName("resize");
 		frame.getContentPane().add(lblResize);
+		
+	    lblDelete.addMouseListener(viewController.getEditMouseAdapter());
+		lblDelete.setName("delete");
+		lblDelete.setBounds(77, 496, 56, 16);
+		frame.getContentPane().add(lblDelete);
 
 		
 	}
