@@ -29,6 +29,7 @@ public class DrawShapeMouseAdapter implements  MouseListener, MouseMotionListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		//Control.state="ChooseShapeToDraw";
+		
 		ShapeFactory shapeFactory = new ShapeFactory();
 		String compName = e.getComponent().getName();
 		if(compName.equalsIgnoreCase("line")) {

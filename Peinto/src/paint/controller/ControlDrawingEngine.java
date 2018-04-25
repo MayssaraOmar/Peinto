@@ -1,22 +1,44 @@
 package paint.controller;
 
 
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import paint.model.Shape;
+import paint.view.Canvas;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
+	private UndoRedoMouseAdapter undoRedoMouseAdapter;
+	private Originator originator;
+	private CareTaker careTaker;
+
 	
 	public ControlDrawingEngine() {
 		this.currentShape = null;
 		this.shapes = new ArrayList<Shape>();
 		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
+		this.setUndoRedoMouseAdapter(new UndoRedoMouseAdapter (this));
+		this.setOriginator(new Originator());
+		this.setCareTaker(new CareTaker());
+		saveState();
+	}
+	public CareTaker getCareTaker() {
+		return this.careTaker;
+	}
+	public void setCareTaker(CareTaker careTaker) {
+		this.careTaker = careTaker;
+	}
+	public Originator getOriginator() {
+		return this.originator;
+	}
+	public void setOriginator(Originator originator) {
+		this.originator = originator;
 	}
 	public Shape getCurrentShape() {
 		return this.currentShape;
@@ -44,9 +66,14 @@ public class ControlDrawingEngine implements DrawingEngine {
 	public void setDrawShapeMouseAdapter(DrawShapeMouseAdapter drawShapeMouseAdapter) {
 		this.drawShapeMouseAdapter = drawShapeMouseAdapter;
 	}
+	public UndoRedoMouseAdapter getUndoRedoMouseAdapter() {
+		return undoRedoMouseAdapter;
+	}
+	public void setUndoRedoMouseAdapter(UndoRedoMouseAdapter undoRedoMouseAdapter) {
+		this.undoRedoMouseAdapter = undoRedoMouseAdapter;
+	}
 	@Override
 	public void refresh(Object canvas) {
-		System.out.println(shapes.size());
 		for(Shape shape : shapes) {
 			shape.draw(canvas);
 		}	
@@ -54,10 +81,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 	@Override
 	public void addShape(Shape shape) {
 		shapes.add(shape);
-		/*Map<String,Double> m = new HashMap<>();
-		if(getCurrentShape()!=null) { 		m=getCurrentShape().getProperties();
-
-		System.out.println(m.get("EndPositionX") + " " + m.get("EndPositionY") + " " + m.get("Radius"));}*/
+		saveState();
 	}
 
 	@Override
@@ -76,17 +100,28 @@ public class ControlDrawingEngine implements DrawingEngine {
 		Shape[] shapesArray = shapes.toArray(new Shape[shapes.size()]);
 		return shapesArray;
 	}
+	
+	public void saveState() {
+		if(shapes == null) 
+			return;
+		originator.setState(shapes);
+		careTaker.addCurrent(originator.saveStateToMemento());
+	}
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-		
+		originator.getStateFromMemento(careTaker.undo());
+		shapes = (ArrayList<Shape>) originator.getState().clone();
+		Canvas.getCanvas(this).revalidate();
+		Canvas.getCanvas(this).repaint();
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		originator.getStateFromMemento(careTaker.redo());
+		shapes = (ArrayList<Shape>) originator.getState().clone();
+		Canvas.getCanvas(this).revalidate();
+		Canvas.getCanvas(this).repaint();
 	}
 
 	@Override
@@ -112,5 +147,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }
