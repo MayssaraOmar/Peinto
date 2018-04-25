@@ -33,7 +33,7 @@ public class SelectMouseAdapter implements  MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if( controlDrawingEngine.isSelected() == true)
+		if( controlDrawingEngine.isSelected() == true )
 		{
 			 Shape [] shapesTemp = controlDrawingEngine.getShapes();
 			 
