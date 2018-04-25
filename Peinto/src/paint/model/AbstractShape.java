@@ -49,7 +49,7 @@ public abstract class AbstractShape implements Shape , Cloneable {
 		return super.clone(); 
 	}
     
-	public abstract boolean contains(double xx, double yy);
+	
 	
 
 	

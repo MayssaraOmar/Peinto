@@ -7,9 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
 public class LineSegment extends AbstractShape{
+	Line2D line = null;
 	
 	public LineSegment() {
 		super();
+		this.getProperties().put("selected", 0.0);
 	}
 	
 	public void draw(Object canvas){
@@ -17,23 +19,34 @@ public class LineSegment extends AbstractShape{
 		if(canvas == null || getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
 			return;
 		Graphics2D g2D  = (Graphics2D) canvas;
-		((Graphics2D)g2D).setStroke(new BasicStroke(3));
+		g2D.setStroke(new BasicStroke(3));
+		if( this.getProperties().get("selected") == 1.0)
+		{
+			float dash1[] = {10.0f};
+		    BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+		    g2D.setStroke(dashed);
+
+		}
+		 line = new Line2D.Double(this.getPosition().x , this.getPosition().y ,this.getProperties().get("EndPositionX").intValue(),this.getProperties().get("EndPositionY").intValue());
+		
 		g2D.setColor(this.getColor());
-		g2D.drawLine(getPosition().x, getPosition().y, properties.get("EndPositionX").intValue(), properties.get("EndPositionY").intValue());
+		g2D.draw(line);
 	}
 	
 	public boolean contains(double xx, double yy)
 	{
-		Line2D line = new Line2D.Double(this.getPosition().x , this.getPosition().y ,this.getProperties().get("EndPositionX").intValue(),this.getProperties().get("EndPositionY").intValue());
-		double boxX = xx - 2/ 2;
-		double boxY = yy- 2 / 2;
+		 
+		double boxX = xx - 3/ 2;
+		double boxY = yy- 3/ 2;
 
 		int width = 2;
 		int height = 2;
+		if(line == null)
+			return false;
 		return (line.intersects(boxX , boxY, width, height) ); 
 		          
 	}
-	public void drawS(Object canvas)
+	/*public void drawS(Object canvas)
 	{
 		Graphics2D g2D  = (Graphics2D) canvas;
 		float dash1[] = {10.0f};
@@ -44,6 +57,6 @@ public class LineSegment extends AbstractShape{
 		g2D.drawLine(this.getPosition().x , this.getPosition().y ,this.getProperties().get("EndPositionX").intValue(),this.getProperties().get("EndPositionY").intValue());
 	   
 	 
-	} 
+	} */
 
 }

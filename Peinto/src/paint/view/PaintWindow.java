@@ -26,10 +26,11 @@ public class PaintWindow {
 	private final JLabel lblTriangle = new JLabel("Triangle");
 	private final JLabel lblRedo = new JLabel("redo");
 	private final JLabel lblUndo = new JLabel("undo");
-  private final JLabel lblStrokeColor = new JLabel("set stroke color");
-  private final JLabel lblfillColor = new JLabel("set fill color");
-  private final JLabel lblselect = new JLabel("select");
-  private final JLabel lbldeselect = new JLabel("deselect");
+    private final JLabel lblStrokeColor = new JLabel("set stroke color");
+    private final JLabel lblfillColor = new JLabel("set fill color");
+    private final JLabel lblselect = new JLabel("select");
+    private final JLabel lbldeselect = new JLabel("deselect");
+    private final JLabel lblMove = new JLabel("move");
     
     
 
@@ -135,6 +136,17 @@ public class PaintWindow {
 				viewController.setSelected(false);
 			}
 		});
+		
+		
+		lblMove.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				viewController.setMove(true);
+			}
+		});
+		lblMove.setBounds(39, 476, 46, 14);
+		frame.getContentPane().add(lblMove);
+		
 		
 		
 		

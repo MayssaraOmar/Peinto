@@ -42,8 +42,7 @@ public class SelectMouseAdapter implements  MouseListener, MouseMotionListener {
 	             if(shapesTemp[i].contains(e.getX(), e.getY()) )
 	             {
 	            	 this.selectedShapesAL.add(shapesTemp[i]);
-	            	 controlDrawingEngine.removeShape(shapesTemp[i]);
-	            	controlDrawingEngine.setCurrentSelectedShape(shapesTemp[i]);
+	            	 shapesTemp[i].getProperties().put("selected", 1.0);
 	            	 Canvas.getCanvas(controlDrawingEngine).repaint();
 	             }
 	                 

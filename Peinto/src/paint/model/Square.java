@@ -9,8 +9,10 @@ import java.util.Map;
 
 public class Square extends AbstractShape {
 
+	 Rectangle2D square2d=null;
 	public Square() {
 		super();
+		this.getProperties().put("selected", 0.0);
 	}
 
 	public void draw(Object canvas) {
@@ -21,15 +23,25 @@ public class Square extends AbstractShape {
 			return;
 		
 		Graphics2D g2D  = (Graphics2D) canvas;
+		g2D.setStroke(new BasicStroke(3));
+		if( this.getProperties().get("selected") == 1.0)
+		{
+			float dash1[] = {10.0f};
+		    BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+		    g2D.setStroke(dashed);
+
+		}
 		
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int sideLength =  Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
-		((Graphics2D)g2D).setStroke(new BasicStroke(3));
+	    square2d = new Rectangle2D.Double(x,y,sideLength,sideLength);
+		
 		g2D.setColor(this.getColor());
-	    g2D.drawRect(x, y, sideLength, sideLength);
+	    g2D.draw(square2d);
 	    g2D.setColor(this.getFillColor());
-	    g2D.fillRect(x, y, sideLength, sideLength);
+	    g2D.fill(square2d);
+	    
 	    
 	    properties.put("SideLength", (double) sideLength);
 		setProperties(properties);
@@ -37,10 +49,12 @@ public class Square extends AbstractShape {
 	
 	public boolean contains(double xx, double yy)
 	{
-		Double sideLength = this.getProperties().get("SideLength");
+		/*Double sideLength = this.getProperties().get("SideLength");
 		int x = Math.min(this.getPosition().x , this.getProperties().get("EndPositionX").intValue());
 		int y = Math.min( this.getPosition().y ,this.getProperties().get("EndPositionY").intValue() );
-		Rectangle2D square2d = new Rectangle2D.Double(x,y,sideLength,sideLength);
+		Rectangle2D square2d = new Rectangle2D.Double(x,y,sideLength,sideLength);*/ 
+		if( square2d == null)
+			return false;
 		return ( square2d.contains(xx, yy));
 	}
 	public void drawS(Object canvas)

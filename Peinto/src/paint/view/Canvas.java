@@ -56,8 +56,8 @@ public class Canvas extends JPanel {
 		
 		viewController.refresh(g2D);
 		viewController.drawCurrentShape(g2D);
-		viewController.refreshSelected(g2D);
-		viewController.drawCurrentSelectedShape(g2D);
+		//viewController.refreshSelected(g2D);
+		//viewController.drawCurrentSelectedShape(g2D);
 		// draw current 
     }
 	

@@ -18,6 +18,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
+	private boolean move = false;
 
 	private UndoRedoMouseAdapter undoRedoMouseAdapter;
 	private Originator originator;
@@ -35,6 +36,12 @@ public class ControlDrawingEngine implements DrawingEngine {
 	
 	
 	
+	public boolean isMove() {
+		return move;
+	}
+	public void setMove(boolean move) {
+		this.move = move;
+	}
 	public ArrayList<Shape> getSelectedShapes() {
 		return selectedShapes;
 	}
@@ -160,20 +167,20 @@ public class ControlDrawingEngine implements DrawingEngine {
 		
 		
 	}
-	public void refreshSelected(Object canvas) {
-		for( Shape shape: selectedArrayList ) {
-			shape.drawS(canvas);
-		}
-	}
-	public void drawCurrentSelectedShape( Object canvas)
-	{
-		if(getCurrentSelectedShape() == null ) 
-			return;
-		Map<String, Double> properties = getCurrentSelectedShape().getProperties();
-		if(getCurrentSelectedShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
-			return;
-		getCurrentSelectedShape().drawS(canvas);	
-	}
+	//public void refreshSelected(Object canvas) {
+		//for( Shape shape: selectedArrayList ) {
+		//	shape.drawS(canvas);
+		//}
+	//}
+//	public void drawCurrentSelectedShape( Object canvas)
+	//{
+	//	if(getCurrentSelectedShape() == null ) 
+	//		return;
+		//Map<String, Double> properties = getCurrentSelectedShape().getProperties();
+	//	if(getCurrentSelectedShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+		//	return;
+	//	getCurrentSelectedShape().drawS(canvas);	
+	//}
 	@Override
 	public void addShape(Shape shape) {
 		shapes.add(shape);
