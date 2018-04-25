@@ -120,7 +120,14 @@ public class ControlDrawingEngine implements DrawingEngine {
 		System.out.println(shapes.size());
 		for(Shape shape : shapes) {
 			shape.draw(canvas);
-		}	
+		}
+		
+		
+	}
+	public void refreshSelected(Object canvas) {
+		for( Shape shape: selectedArrayList ) {
+			shape.drawS(canvas);
+		}
 	}
 	public void drawCurrentSelectedShape( Object canvas)
 	{

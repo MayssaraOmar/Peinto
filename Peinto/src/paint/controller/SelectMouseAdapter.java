@@ -48,6 +48,7 @@ public class SelectMouseAdapter implements  MouseListener, MouseMotionListener {
 	             }
 	                 
 			}
+			controlDrawingEngine.setSelectedArrayList(this.selectedShapesAL);
 		}
 		
 		
