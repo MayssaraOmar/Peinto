@@ -1,12 +1,12 @@
 package paint.view;
 
+
 import paint.controller.CanvasMouseAdapter;
 import paint.controller.Control;
 import paint.controller.ControlDrawingEngine;
 import paint.controller.ColorLabelMouseAdapter;
 
-import java.awt.Component;
-import java.awt.EventQueue;
+import paint.controller.ControlDrawingEngine;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
@@ -24,10 +24,12 @@ public class PaintWindow {
 	private final JLabel lblSquare = new JLabel("Square");
 	private final JLabel lblEllipse = new JLabel("Ellipse");
 	private final JLabel lblTriangle = new JLabel("Triangle");
-    private final JLabel lblStrokeColor = new JLabel("set stroke color");
-    private final JLabel lblfillColor = new JLabel("set fill color");
-    private final JLabel lblselect = new JLabel("select");
-    private final JLabel lbldeselect = new JLabel("deselect");
+	private final JLabel lblRedo = new JLabel("redo");
+	private final JLabel lblUndo = new JLabel("undo");
+  private final JLabel lblStrokeColor = new JLabel("set stroke color");
+  private final JLabel lblfillColor = new JLabel("set fill color");
+  private final JLabel lblselect = new JLabel("select");
+  private final JLabel lbldeselect = new JLabel("deselect");
     
     
 
@@ -84,6 +86,16 @@ public class PaintWindow {
 		lblTriangle.setName("triangle");
 		lblTriangle.setBounds(39, 244, 71, 16);
 		frame.getContentPane().add(lblTriangle);
+	
+		lblRedo.addMouseListener(viewController.getUndoRedoMouseAdapter());
+		lblRedo.setName("redo");
+		lblRedo.setBounds(26, 88, 56, 16);
+		frame.getContentPane().add(lblRedo);
+		
+		lblUndo.addMouseListener(viewController.getUndoRedoMouseAdapter());
+		lblUndo.setName("undo");
+		lblUndo.setBounds(77, 88, 56, 16);
+		frame.getContentPane().add(lblUndo);
 		
 		
 		lblStrokeColor.setBounds(39, 351, 94, 14);
