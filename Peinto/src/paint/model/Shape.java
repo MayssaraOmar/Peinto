@@ -22,5 +22,8 @@ public interface Shape
 	
 	/* create a deep clone of the shape */ 
 	public Object clone() throws CloneNotSupportedException;
+	
+	public boolean contains(double xx, double yy);
+	public void drawS(Object canvas);
 
 }

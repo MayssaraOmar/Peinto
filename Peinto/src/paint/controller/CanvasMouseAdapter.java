@@ -48,6 +48,8 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 			return;
 		startPoint = new Point(e.getPoint());
 		controlDrawingEngine.getCurrentShape().setPosition(startPoint);
+		controlDrawingEngine.getCurrentShape().setColor(controlDrawingEngine.getStrokeColor() );
+		controlDrawingEngine.getCurrentShape().setFillColor(controlDrawingEngine.getFillColor());
 		endPoint = new Point(e.getPoint());
 		Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
 		properties.put("EndPositionX", (double) endPoint.x);
