@@ -10,6 +10,10 @@ public class CareTaker {
 	 
 	 public void addCurrent(Memento state){
 		 redoList.clear();
+		 //if(undoList.size()>1)
+				//System.out.println("when adding  "+this.undoList.getLast().getState().get(0).getProperties().get("EndPositionX"));
+			//System.out.println("AFTER   "+this.shapes.get(this.shapes.size()-1).getProperties().get("EndPositionX"));
+
 		 addUndo(state);
 	 }
 	

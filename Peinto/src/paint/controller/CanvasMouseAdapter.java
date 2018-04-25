@@ -15,7 +15,7 @@ import paint.view.Canvas;
 
 
 public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
-	private Point startPoint = null, endPoint = null, midPoint = null;
+	private Point startPoint = null, endPoint = null, mousePoint = null;
 	private ControlDrawingEngine controlDrawingEngine;
 	
 	public CanvasMouseAdapter(ControlDrawingEngine controlDrawingEngine){
@@ -24,8 +24,12 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(controlDrawingEngine.getState().equalsIgnoreCase("Selecting")) {
+			controlDrawingEngine.select(e.getX(), e.getY());
+		}	
+		else if(controlDrawingEngine.getState().equalsIgnoreCase("Deselecting")) {
+			controlDrawingEngine.deselect(e.getX(), e.getY());
+		}	
 	}
 
 	@Override
@@ -43,41 +47,74 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		//if(Control.state.equalsIgnoreCase("ChooseShapeToDraw") && e.getComponent().) Control.state = "Drawing";
-		//if(Control.state.equalsIgnoreCase("Drawing")) {
-		if(controlDrawingEngine.getCurrentShape() == null) 
-			return;
-		startPoint = new Point(e.getPoint());
-		controlDrawingEngine.getCurrentShape().setPosition(startPoint);
-		controlDrawingEngine.getCurrentShape().setColor(controlDrawingEngine.getStrokeColor() );
-		controlDrawingEngine.getCurrentShape().setFillColor(controlDrawingEngine.getFillColor());
-		endPoint = new Point(e.getPoint());
-		Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
-		properties.put("EndPositionX", (double) endPoint.x);
-		properties.put("EndPositionY", (double) endPoint.y);
-		controlDrawingEngine.getCurrentShape().setProperties(properties);
+		if(controlDrawingEngine.getState().equalsIgnoreCase("Drawing")) {
+			if(controlDrawingEngine.getCurrentShape() == null) 
+				return;
+			startPoint = new Point(e.getPoint());
+			controlDrawingEngine.getCurrentShape().setPosition(startPoint);
+			//controlDrawingEngine.getCurrentShape().setColor(controlDrawingEngine.getStrokeColor() );
+			//controlDrawingEngine.getCurrentShape().setFillColor(controlDrawingEngine.getFillColor());
+			endPoint = new Point(e.getPoint());
+			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionX", (double) endPoint.x);
+			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionY", (double) endPoint.y);
+			/*Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
+			properties.put("EndPositionX", (double) endPoint.x);
+			properties.put("EndPositionY", (double) endPoint.y);
+			controlDrawingEngine.getCurrentShape().setProperties(properties);*/
+		}
+		else if(controlDrawingEngine.getState().equalsIgnoreCase("Moving")) {
+			controlDrawingEngine.saveState();
+			mousePoint = new Point(e.getPoint());
+		}
+        Canvas.getCanvas(controlDrawingEngine).repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(controlDrawingEngine.getCurrentShape() == null) 
-			return;
-		controlDrawingEngine.addShape(controlDrawingEngine.getCurrentShape());
-		controlDrawingEngine.setCurrentShape(null);
+		if(controlDrawingEngine.getState().equalsIgnoreCase("Drawing")) {
+			
+			if(controlDrawingEngine.getCurrentShape() == null) 
+				return;
+			controlDrawingEngine.addShape(controlDrawingEngine.getCurrentShape());
+			controlDrawingEngine.setCurrentShape(null);
+		}
+		else if(controlDrawingEngine.getState().equalsIgnoreCase("Moving")) 
+		{
+			if(mousePoint == null)
+				return;
+			controlDrawingEngine.move(e.getX(), e.getY(), mousePoint);
+	        mousePoint = e.getPoint();
+			controlDrawingEngine.saveState();
+
+		}
 	    Canvas.getCanvas(controlDrawingEngine).repaint();
+		//https://stackoverflow.com/questions/5309150/jlabel-mouse-events-for-drag-and-drop/5312702#5312702
 	}
 
 	
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(controlDrawingEngine.getCurrentShape() == null) 
-			return;
-		endPoint = new Point(e.getPoint());
-		Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
-		properties.put("EndPositionX", (double) endPoint.x);
-		properties.put("EndPositionY", (double) endPoint.y);
-		controlDrawingEngine.getCurrentShape().setProperties(properties);
-        Canvas.getCanvas(controlDrawingEngine).repaint();	
+		if(controlDrawingEngine.getState().equalsIgnoreCase("Drawing")) {
+
+			if(controlDrawingEngine.getCurrentShape() == null) 
+				return;
+			endPoint = new Point(e.getPoint());
+			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionX", (double) endPoint.x);
+			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionY", (double) endPoint.y);
+			/*Map<String, Double> properties = controlDrawingEngine.getCurrentShape().getProperties();
+			properties.put("EndPositionX", (double) endPoint.x);
+			properties.put("EndPositionY", (double) endPoint.y);
+			controlDrawingEngine.getCurrentShape().setProperties(properties);*/
+		}
+		else if(controlDrawingEngine.getState().equalsIgnoreCase("Moving")) 
+		{
+			if(mousePoint == null)
+				return;
+			controlDrawingEngine.move(e.getX(), e.getY(), mousePoint);
+	        mousePoint = e.getPoint();
+		}
+	    Canvas.getCanvas(controlDrawingEngine).repaint();
 	}
 
 	@Override
