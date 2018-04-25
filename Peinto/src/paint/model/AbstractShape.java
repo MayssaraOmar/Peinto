@@ -48,6 +48,9 @@ public abstract class AbstractShape implements Shape , Cloneable {
 	public Object clone() throws CloneNotSupportedException{
 		return super.clone(); 
 	}
+    
+	public abstract boolean contains(double xx, double yy);
+	
 
 	
 }

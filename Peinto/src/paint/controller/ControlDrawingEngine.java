@@ -9,13 +9,53 @@ import paint.model.Shape;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
+	private Shape currentSelectedShape;
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
 	private ColorLabelMouseAdapter colorLabelMouseAdapter;
+	private SelectMouseAdapter selectMouseAdapter;
+	private ArrayList<Shape> selectedShapes;
 	private static Color strokeColor = Color.BLACK;
 	private static Color fillColor = Color.WHITE;
+	private static boolean selected = false;
+	private ArrayList<Shape> selectedArrayList = new ArrayList<Shape>();
 	
+	
+	
+	public ArrayList<Shape> getSelectedShapes() {
+		return selectedShapes;
+	}
+	public void setSelectedShapes(ArrayList<Shape> selectedShapes) {
+		this.selectedShapes = selectedShapes;
+	}
+	public void setShapes(ArrayList<Shape> shapes) {
+		this.shapes = shapes;
+	}
+	public ArrayList<Shape> getArrayListShapes(){
+		return shapes;
+	}
+	public ArrayList<Shape> getSelectedArrayList() {
+		return selectedArrayList;
+	}
+	public void setSelectedArrayList(ArrayList<Shape> selectedArrayList) {
+		this.selectedArrayList = selectedArrayList;
+	}
+
+	
+	public SelectMouseAdapter getSelectMouseAdapter() {
+		return selectMouseAdapter;
+	}
+	public void setSelectMouseAdapter(SelectMouseAdapter selectMouseAdapter) {
+		this.selectMouseAdapter = selectMouseAdapter;
+	}
+
+	public static boolean isSelected() {
+		return selected;
+	}
+	public static void setSelected(boolean selected) {
+		ControlDrawingEngine.selected = selected;
+	}
 	public ColorLabelMouseAdapter getColorLabelMouseAdapter() {
 		return colorLabelMouseAdapter;
 	}
@@ -40,6 +80,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
 		this.setColorLabelMouseAdapter(new ColorLabelMouseAdapter (this));
+		this.setSelectMouseAdapter(new SelectMouseAdapter (this));
 	}
 	public Shape getCurrentShape() {
 		return this.currentShape;
@@ -51,9 +92,16 @@ public class ControlDrawingEngine implements DrawingEngine {
 		if(getCurrentShape() == null ) 
 			return;
 		Map<String, Double> properties = getCurrentShape().getProperties();
-		if(getCurrentShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionX") == null) 
+		if(getCurrentShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
 			return;
 		getCurrentShape().draw(canvas);	
+	}
+	
+	public Shape getCurrentSelectedShape() {
+		return currentSelectedShape;
+	}
+	public void setCurrentSelectedShape(Shape shape) {
+		this.currentSelectedShape = shape;
 	}
 	public CanvasMouseAdapter getCanvasMouseAdapter() {
 		return canvasMouseAdapter;
@@ -74,6 +122,15 @@ public class ControlDrawingEngine implements DrawingEngine {
 			shape.draw(canvas);
 		}	
 	}
+	public void drawCurrentSelectedShape( Object canvas)
+	{
+		if(getCurrentSelectedShape() == null ) 
+			return;
+		Map<String, Double> properties = getCurrentSelectedShape().getProperties();
+		if(getCurrentSelectedShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
+			return;
+		getCurrentSelectedShape().drawS(canvas);	
+	}
 	@Override
 	public void addShape(Shape shape) {
 		shapes.add(shape);
@@ -85,7 +142,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 
 	@Override
 	public void removeShape(Shape shape) {
-		// TODO Auto-generated method stub
+		shapes.remove(shape);
 		
 	}
 

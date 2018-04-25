@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PaintWindow {
 	
@@ -24,6 +26,9 @@ public class PaintWindow {
 	private final JLabel lblTriangle = new JLabel("Triangle");
     private final JLabel lblStrokeColor = new JLabel("set stroke color");
     private final JLabel lblfillColor = new JLabel("set fill color");
+    private final JLabel lblselect = new JLabel("select");
+    private final JLabel lbldeselect = new JLabel("deselect");
+    
     
 
 
@@ -91,6 +96,35 @@ public class PaintWindow {
 		lblfillColor.addMouseListener(viewController.getColorLabelMouseAdapter() );
 		lblfillColor.setName("fill color");
 		frame.getContentPane().add(lblfillColor);
+		
+		
+		
+		
+		lblselect.setBounds(39, 414, 46, 14);
+		frame.getContentPane().add(lblselect);
+		lblselect.setName("select");
+		lblselect.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				viewController.setSelected(true);
+			}
+		});
+		
+		
+		
+		
+		
+		lbldeselect.setBounds(39, 451, 46, 14);
+		frame.getContentPane().add(lbldeselect);
+		lbldeselect.setName("deselect");
+		lbldeselect.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0 ) {
+				viewController.setSelected(false);
+			}
+		});
+		
+		
 		
 	}
 
