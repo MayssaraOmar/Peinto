@@ -1,7 +1,7 @@
 package paint.model;
 
 public interface Shape 
-{
+{ 
 	
 	public void setPosition(java.awt.Point Position); 
 	public java.awt.Point getPosition(); 
