@@ -147,7 +147,7 @@ public class PaintWindow {
 		
 		frame.getContentPane().add(lbldelete);
 		lblResize.setBounds(39, 158, 46, 14);
-		lblResize.addMouseListener(null);
+		//lblResize.addMouseListener(viewController.getResizeMouseAdapter() );
 		
 		frame.getContentPane().add(lblResize);
 		lbldelete.addMouseListener(viewController.getDeleteMouseAdapter());

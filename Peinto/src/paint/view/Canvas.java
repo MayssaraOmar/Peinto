@@ -38,6 +38,7 @@ public class Canvas extends JPanel {
 		addMouseListener(viewController.getCanvasMouseAdapter());
 		addMouseMotionListener(viewController.getCanvasMouseAdapter());
 		addMouseListener(viewController.getSelectMouseAdapter());
+		addMouseListener(viewController.getResizeMouseAdapter());
 		
 	}
 	

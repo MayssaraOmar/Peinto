@@ -10,13 +10,16 @@ import paint.view.Canvas;
 
 public class ResizeMouseAdapter implements MouseListener, MouseMotionListener {
 	private ControlDrawingEngine controlDrawingEngine;
+	private double x;
+	private double y;
 	
 	public ResizeMouseAdapter(ControlDrawingEngine controlDrawingEngine){
 		this.controlDrawingEngine = controlDrawingEngine;
 	}
 	@Override
-	public void mouseDragged(MouseEvent arg0) {
+	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
+		controlDrawingEngine.resize(x, y, e.getX(), e.getY());
 		
 	}
 
@@ -28,8 +31,6 @@ public class ResizeMouseAdapter implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
 		
 		
 	}
@@ -47,14 +48,16 @@ public class ResizeMouseAdapter implements MouseListener, MouseMotionListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		this.x = e.getX();
+		this.y = e.getY();
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		controlDrawingEngine.resize(x, y, e.getX(), e.getY());
 		
 	}
 }

@@ -21,7 +21,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
 	private CopyMouseAdapter copyMouseAdapter;
 	private DeleteMouseAdapter deleteMouseAdapter;
-	
+	private ResizeMouseAdapter resizeMouseAdapter;
 
 	private UndoRedoMouseAdapter undoRedoMouseAdapter;
 	private Originator originator;
@@ -40,6 +40,12 @@ public class ControlDrawingEngine implements DrawingEngine {
 	
 	
 	
+	public ResizeMouseAdapter getResizeMouseAdapter() {
+		return resizeMouseAdapter;
+	}
+	public void setResizeMouseAdapter(ResizeMouseAdapter resizeMouseAdapter) {
+		this.resizeMouseAdapter = resizeMouseAdapter;
+	}
 	public DeleteMouseAdapter getDeleteMouseAdapter() {
 		return deleteMouseAdapter;
 	}
@@ -110,6 +116,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
 		this.setCopyMouseAdapter(new CopyMouseAdapter (this));
 		this.setDeleteMouseAdapter(new DeleteMouseAdapter (this));
+		this.setResizeMouseAdapter(new ResizeMouseAdapter (this));
 
 		this.setUndoRedoMouseAdapter(new UndoRedoMouseAdapter (this));
 		this.setOriginator(new Originator());
@@ -180,8 +187,8 @@ public class ControlDrawingEngine implements DrawingEngine {
 	public void copy()
 	{
 		
-		if(  state!=null && state.equalsIgnoreCase("Copying") )
-		{
+	//	if(  state!=null && state.equalsIgnoreCase("Copying") )
+		//{
 			for(int i=0; i< shapes.size() ; i++ )
 			{
 				try {
@@ -199,11 +206,11 @@ public class ControlDrawingEngine implements DrawingEngine {
 					System.out.println("clone error");
 				}
 	         }
-		}
+		//}
 	}
 	public void delete() {
-		if( state!=null && state.equalsIgnoreCase("Deletingw eltanya ") )
-		{
+		//if( state!=null && state.equalsIgnoreCase("Deletingw eltanya ") )
+	//	{
 			for(int i=0; i< shapes.size() ; i++ )
 			{
 				if( shapes.get(i).getProperties().get("selected") == 1.0)
@@ -212,7 +219,24 @@ public class ControlDrawingEngine implements DrawingEngine {
 				Canvas.getCanvas(this).repaint();
 				}
 			}
-		}
+		//}
+	}
+	public void resize(double xx, double yy, double xDragged, double yDragged)
+	{	
+	//	if( state!=null && state.equalsIgnoreCase("Resize") )
+		//{
+			for(int i = 0; i< shapes.size() ; i++ )
+			{
+				if( shapes.get(i).getProperties().get("selected") == 1.0 && shapes.get(i).contains(xx, yy))
+				{
+					shapes.get(i).getProperties().put("EndPositionX", (double) xDragged);
+					shapes.get(i).getProperties().put("EndPositionY", yDragged);
+			        Canvas.getCanvas(this).repaint();	
+			        
+				}
+			}
+		//}
+		
 	}
 
 	@Override
