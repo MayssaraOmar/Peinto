@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import paint.model.Shape;
 import paint.view.Canvas;
+import paint.controller.*;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
@@ -27,14 +28,17 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private static Color fillColor = Color.WHITE;
 	private String state = null;
 	
+
 	public ControlDrawingEngine() {
 		this.currentShape = null;
 		this.shapes = new ArrayList<Shape>();
 		this.setCanvasMouseAdapter(new CanvasMouseAdapter (this));
 		this.setDrawShapeMouseAdapter(new DrawShapeMouseAdapter (this));
+
 		this.setBasicCommandsMouseAdapter(new BasicCommandsMouseAdapter (this));
 		this.setColorLabelMouseAdapter(new ColorLabelMouseAdapter (this));
 		this.setEditMouseAdapter(new EditMouseAdapter(this));
+
 		this.setOriginator(new Originator());
 		this.setCareTaker(new CareTaker());
 		saveState();
@@ -54,6 +58,68 @@ public class ControlDrawingEngine implements DrawingEngine {
 			return;
 		getCurrentShape().draw(canvas);	
 	}
+	
+	@Override
+	public void refresh(Object canvas) {
+		for(Shape shape : shapes) {
+			shape.draw(canvas);
+		}
+	}
+	public void copy()
+	{
+		
+	if(  state!=null && state.equalsIgnoreCase("Copying") )
+		{
+			for(int i=0; i< shapes.size() ; i++ )
+			{
+				try {
+					if( shapes.get(i).getProperties().get("selected") == 1.0 )
+					{
+						currentShape = ((Shape)shapes.get(i).clone());
+						Map<String, Double> properties = currentShape.getProperties();
+						properties.put("selected", 0.0);
+						currentShape.setProperties(properties);
+						addShape(currentShape );
+						currentShape = null;
+						Canvas.getCanvas(this).repaint();
+					}
+			    } catch(Exception ex) {
+					System.out.println("clone error");
+				}
+	         }
+		}
+	}
+	public void delete() {
+		if( state!=null && state.equalsIgnoreCase("Deletingw eltanya ") )
+		{
+			for(int i=0; i< shapes.size() ; i++ )
+			{
+				if( shapes.get(i).getProperties().get("selected") == 1.0)
+				{
+				removeShape(shapes.get(i));
+				Canvas.getCanvas(this).repaint();
+				}
+			}
+		}
+	}
+	public void resize(double xx, double yy, double xDragged, double yDragged)
+	{	
+		if( state!=null && state.equalsIgnoreCase("Resize") )
+		{
+			for(int i = 0; i< shapes.size() ; i++ )
+			{
+				if( shapes.get(i).getProperties().get("selected") == 1.0 && shapes.get(i).contains(xx, yy))
+				{
+					shapes.get(i).getProperties().put("EndPositionX", (double) xDragged);
+					shapes.get(i).getProperties().put("EndPositionY", yDragged);
+			        Canvas.getCanvas(this).repaint();	
+			        
+				}
+			}
+		}
+		
+	}
+
 	@Override
 	public void addShape(Shape shape) {
 		shapes.add(shape);

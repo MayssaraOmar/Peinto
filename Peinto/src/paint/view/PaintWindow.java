@@ -26,12 +26,14 @@ public class PaintWindow {
 	private final JLabel lblTriangle = new JLabel("Triangle");
 	private final JLabel lblRedo = new JLabel("redo");
 	private final JLabel lblUndo = new JLabel("undo");
-    private final JLabel lblStrokeColor = new JLabel("set stroke color");
-    private final JLabel lblfillColor = new JLabel("set fill color");
-    private final JLabel lbldeselect = new JLabel("deselect");
-    private final JLabel lblMove = new JLabel("move");
-    private final JLabel lblSelect = new JLabel("select");
-    private final JLabel lblDeselect = new JLabel("deselect");
+  private final JLabel lblStrokeColor = new JLabel("set stroke color");
+  private final JLabel lblfillColor = new JLabel("set fill color");
+  private final JLabel lblMove = new JLabel("move");
+  private final JLabel lblSelect = new JLabel("select");
+  private final JLabel lblDeselect = new JLabel("deselect");
+  private final JLabel lblCopy = new JLabel("copy");
+  private final JLabel lblDelete = new JLabel("delete");
+  private final JLabel lblResize = new JLabel("resize");
     
     
 
@@ -111,11 +113,6 @@ public class PaintWindow {
 		lblfillColor.setName("fill color");
 		frame.getContentPane().add(lblfillColor);
 		
-		lblMove.addMouseListener(viewController.getEditMouseAdapter());
-		lblMove.setBounds(39, 476, 46, 14);
-		lblMove.setName("move");
-		frame.getContentPane().add(lblMove);
-		
 		lblSelect.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		lblSelect.setName("select");
 		lblSelect.setBounds(39, 434, 56, 16);
@@ -125,44 +122,27 @@ public class PaintWindow {
 		lblDeselect.setName("deselect");
 		lblDeselect.setBounds(39, 457, 56, 16);
 		frame.getContentPane().add(lblDeselect);
-		
-		/*lblselect.setBounds(39, 414, 46, 14);
-		frame.getContentPane().add(lblselect);
-		lblselect.setName("select");
-		lblselect.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				viewController.setSelected(true);
-			}
-		});
-		
-		
-		
-		
-		
-		lbldeselect.setBounds(39, 451, 46, 14);
-		frame.getContentPane().add(lbldeselect);
-		lbldeselect.setName("deselect");
-		lbldeselect.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0 ) {
-				//viewController.setSelected(false);
-				viewController.setState("Deselecting");
-			}
-		});
-		
-		
-		lblMove.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				viewController.setState("Moving");
-			}
-		});
+    
+    lblMove.addMouseListener(viewController.getEditMouseAdapter());
 		lblMove.setBounds(39, 476, 46, 14);
+		lblMove.setName("move");
 		frame.getContentPane().add(lblMove);
+    
+    lblCopy.addMouseListener(viewController.getEditMouseAdapter());
+    lblCopy.setBounds(39, 464, 46, 14);
+    lblCopy.setName("copy");
+		frame.getContentPane().add(lblCopy);
+    
+    lblDelete.addMouseListener(viewController.getEditMouseAdapter());
+    lblDelete.setBounds(36, 495, 46, 14);
+    lblDelete.setName("delete");
+		frame.getContentPane().add(lbldelete);
 		
-	*/
-		
+    lblResize.addMouseListener(viewController.getEditMouseAdapter());
+    lblResize.setBounds(39, 158, 46, 14);
+    lblResize.setName("resize");
+		frame.getContentPane().add(lblResize);
+
 		
 	}
 

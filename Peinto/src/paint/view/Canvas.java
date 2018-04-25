@@ -36,8 +36,7 @@ public class Canvas extends JPanel {
 		super.setBounds(143, 105, 623, 383);
 		this.viewController = viewController;
 		addMouseListener(viewController.getCanvasMouseAdapter());
-		addMouseMotionListener(viewController.getCanvasMouseAdapter());
-		
+		addMouseMotionListener(viewController.getCanvasMouseAdapter());	
 	}
 	
 	@Override 
