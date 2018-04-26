@@ -4,14 +4,17 @@ package paint.controller;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import paint.model.JSON;
 import paint.model.Shape;
+import paint.model.XML;
 import paint.view.Canvas;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
-	//private Shape currentSelectedShape;
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
@@ -52,12 +55,14 @@ public class ControlDrawingEngine implements DrawingEngine {
 		Map<String, Double> properties = getCurrentShape().getProperties();
 		if(getCurrentShape().getPosition() == null || properties.get("EndPositionX") == null || properties.get("EndPositionY") == null) 
 			return;
+		getCurrentShape().setColor(strokeColor);
+		getCurrentShape().setFillColor(fillColor);
 		getCurrentShape().draw(canvas);	
 	}
 
 	public void copy()
 	{
-		
+		int flag=0;
 	if(  state!=null && state.equalsIgnoreCase("Copying") )
 		{
 			for(int i=0; i< shapes.size() ; i++ )
@@ -65,13 +70,23 @@ public class ControlDrawingEngine implements DrawingEngine {
 				try {
 					if( shapes.get(i).getProperties().get("selected") == 1.0 )
 					{
+						if( flag == 0) {
+							this.saveState();
+						}
+						flag=2;
 						currentShape = ((Shape)shapes.get(i).clone());
-						Map<String, Double> properties = currentShape.getProperties();
+						Map<String, Double> propertiesOriginal = currentShape.getProperties();
+						Map<String, Double> properties = new HashMap<String, Double>();
+					
+						for(Map.Entry<String,Double> entry : propertiesOriginal.entrySet())
+						{
+							properties.put(entry.getKey(), entry.getValue());
+						}
 						properties.put("selected", 0.0);
 						currentShape.setProperties(properties);
 						addShape(currentShape );
 						currentShape = null;
-						Canvas.getCanvas(this).repaint();
+						//Canvas.getCanvas(this).repaint();
 					}
 			    } catch(Exception ex) {
 					System.out.println("clone error");
@@ -80,29 +95,35 @@ public class ControlDrawingEngine implements DrawingEngine {
 		}
 	}
 	public void delete() {
+		int flag=0;
 		if( state!=null && state.equalsIgnoreCase("Deleting") )
 		{
 			for(int i=0; i< shapes.size() ; i++ )
 			{
+				System.out.println(shapes.size());
 				if( shapes.get(i).getProperties().get("selected") == 1.0)
 				{
+					if( flag == 0 )
+						this.saveState();
+					flag=2;
 				removeShape(shapes.get(i));
-				Canvas.getCanvas(this).repaint();
+				i--;
 				}
 			}
+			
 		}
 	}
 	public void resize(double xx, double yy, double xDragged, double yDragged)
 	{	
-		if( state!=null && state.equalsIgnoreCase("Resize") )
+		if( state!=null && state.equalsIgnoreCase("resizing") )
 		{
 			for(int i = 0; i< shapes.size() ; i++ )
 			{
 				if( shapes.get(i).getProperties().get("selected") == 1.0 && shapes.get(i).contains(xx, yy))
 				{
-					shapes.get(i).getProperties().put("EndPositionX", (double) xDragged);
+					shapes.get(i).getProperties().put("EndPositionX", xDragged);
 					shapes.get(i).getProperties().put("EndPositionY", yDragged);
-			        Canvas.getCanvas(this).repaint();	
+			        
 			        
 				}
 			}
@@ -163,10 +184,11 @@ public class ControlDrawingEngine implements DrawingEngine {
 	}
 	public void select(int x, int y) {
 		if( state!=null && state.equalsIgnoreCase("Selecting") ) {
-			for( Shape shape : shapes) {
-	             if(shape.contains(x,y) ) { 
-	            	 shape.getProperties().put("selected", 1.0);
+			for( int i= (shapes.size() - 1); i>=0 ; i-- ) {
+	             if(shapes.get(i).contains(x,y) ) { 
+	            	 shapes.get(i).getProperties().put("selected", 1.0);
 	            	 Canvas.getCanvas(this).repaint();
+	            	 break;
 	             }      
 			}
 		}
@@ -208,7 +230,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 	     	        Double currY = shape.getProperties().get("EndPositionY");
 	     	        shape.getProperties().put("EndPositionX", currX + dx);
 	     	        shape.getProperties().put("EndPositionY", currY + dy);
-	     	        Canvas.getCanvas(this).repaint();
+	     	      //  Canvas.getCanvas(this).repaint();
 	             }        
 			}
 		} 		
@@ -217,14 +239,28 @@ public class ControlDrawingEngine implements DrawingEngine {
 
 	@Override
 	public void save(String path) {
-		// TODO Auto-generated method stub
-		
+		String extension = path.substring(path.lastIndexOf(".")+1 );
+		if(extension.equals("xml")) {
+			XML xml = new XML();
+			xml.save(path, shapes);
+		}
+		else if(extension.equals("json")) {
+			JSON json = new JSON();
+			json.save(path, shapes);
+		}
 	}
 
 	@Override
 	public void load(String path) {
-		// TODO Auto-generated method stub
-		
+		String extension = path.substring(path.lastIndexOf(".")+1 );
+		if(extension.equals("xml")) {
+			XML xml = new XML();
+			shapes = xml.load(path);
+		}
+		else if(extension.equals("json")) {
+			JSON json = new JSON();
+			shapes = json.load(path);
+		}
 	}
 
 	@Override
@@ -308,6 +344,19 @@ public class ControlDrawingEngine implements DrawingEngine {
 		this.editMouseAdapter = editMouseAdapter;
 	}
 	
+	public void changeStrokeColorOfSelectedShapes() {
+		for( Shape shape : shapes) {
+        	if(shape.getProperties().get("selected") == 1.0 ) { 
+        		shape.setColor(strokeColor);
+        	}
+		}
+	}
+	public void changeFillColorOfSelectedShapes() {
+		for( Shape shape : shapes) {
+        	if(shape.getProperties().get("selected") == 1.0 ) { 
+        		shape.setFillColor(fillColor);
+        	}
+		}
+	}
 	
-
 }

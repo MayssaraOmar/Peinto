@@ -50,6 +50,7 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 		if(controlDrawingEngine.getState().equalsIgnoreCase("Drawing")) {
 			if(controlDrawingEngine.getCurrentShape() == null) 
 				return;
+			//controlDrawingEngine.saveState();
 			startPoint = new Point(e.getPoint());
 			controlDrawingEngine.getCurrentShape().setPosition(startPoint);
 			//controlDrawingEngine.getCurrentShape().setColor(controlDrawingEngine.getStrokeColor() );
@@ -65,6 +66,10 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 		else if(controlDrawingEngine.getState().equalsIgnoreCase("Moving")) {
 			controlDrawingEngine.saveState();
 			mousePoint = new Point(e.getPoint());
+		} else if(controlDrawingEngine.getState().equalsIgnoreCase("resizing")) {
+			mousePoint = new Point(e.getPoint());
+			controlDrawingEngine.saveState();
+			controlDrawingEngine.resize(e.getX(), e.getY(), e.getX(), e.getY());
 		}
         Canvas.getCanvas(controlDrawingEngine).repaint();
 	}
@@ -84,8 +89,13 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 				return;
 			controlDrawingEngine.move(e.getX(), e.getY(), mousePoint);
 	        mousePoint = e.getPoint();
-			controlDrawingEngine.saveState();
 
+		} else if(controlDrawingEngine.getState().equalsIgnoreCase("resizing"))
+		{
+			if(mousePoint == null)
+				return;
+			controlDrawingEngine.resize(mousePoint.getX(),mousePoint.getY(), e.getX(), e.getY());
+			
 		}
 	    Canvas.getCanvas(controlDrawingEngine).repaint();
 		//https://stackoverflow.com/questions/5309150/jlabel-mouse-events-for-drag-and-drop/5312702#5312702
@@ -113,6 +123,12 @@ public class CanvasMouseAdapter implements  MouseListener, MouseMotionListener {
 				return;
 			controlDrawingEngine.move(e.getX(), e.getY(), mousePoint);
 	        mousePoint = e.getPoint();
+		} 
+		else if(controlDrawingEngine.getState().equalsIgnoreCase("resizing")) {
+			
+			if(mousePoint == null)
+				return;
+			controlDrawingEngine.resize(mousePoint.getX(), mousePoint.getY(), e.getX(), e.getY());
 		}
 	    Canvas.getCanvas(controlDrawingEngine).repaint();
 	}
