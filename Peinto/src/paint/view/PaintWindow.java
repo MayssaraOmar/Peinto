@@ -7,8 +7,14 @@ import paint.controller.ControlDrawingEngine;
 import paint.controller.ColorLabelMouseAdapter;
 
 import paint.controller.ControlDrawingEngine;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -93,12 +99,12 @@ public class PaintWindow {
 	
 		lblRedo.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		lblRedo.setName("redo");
-		lblRedo.setBounds(26, 88, 56, 16);
+		lblRedo.setBounds(21, 64, 56, 16);
 		frame.getContentPane().add(lblRedo);
 		
 		lblUndo.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		lblUndo.setName("undo");
-		lblUndo.setBounds(77, 88, 56, 16);
+		lblUndo.setBounds(77, 64, 56, 16);
 		frame.getContentPane().add(lblUndo);
 		
 		
@@ -142,7 +148,64 @@ public class PaintWindow {
 		lblDelete.setName("delete");
 		lblDelete.setBounds(77, 496, 56, 16);
 		frame.getContentPane().add(lblDelete);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				 JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setVisible(true);
+			      // Demonstrate "Save" dialog:
+			      int rVal = fileChooser.showSaveDialog(fileChooser);
+			      String filePath =  fileChooser.getSelectedFile().getAbsolutePath();
+			      System.out.println("it's the path "+filePath);
+			      viewController.save(filePath);
+			     /* if (rVal == JFileChooser.APPROVE_OPTION) {
+			         filename.setText(c.getSelectedFile().getName());
+			        dir.setText(c.getCurrentDirectory().toString());
+			      }
+			      if (rVal == JFileChooser.CANCEL_OPTION) {
+			        filename.setText("You pressed cancel");
+			        dir.setText("");
+			      }*/
+				//Xml trials = new Xml();
+				//trials.save(viewController);
+				
+				//Json tries = new Json();
+				//tries.save(viewController);
+				//tries.load();
+				
+			}
+		});
+		btnSave.setBounds(21, 123, 89, 23);
+		frame.getContentPane().add(btnSave);
+		
+		
+		JButton btnLoad = new JButton("Load");
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setVisible(true);
+		      // Demonstrate "Save" dialog:
+		      int rVal = fileChooser.showOpenDialog(fileChooser);
+		      String filePath =  fileChooser.getSelectedFile().getAbsolutePath();
+		      System.out.println("LOAD path form gui "+filePath);
+		      viewController.load(filePath);
+		      Canvas.getCanvas(viewController).repaint();
+				/*FileChooserTest FileChooser = new FileChooserTest();
+				FileChooser.setVisible(true);
+				//Xml trials = new Xml();
+				//trials.load(viewController);
+				
+				Json tries = new Json();
+				//tries.save();
+				tries.load(viewController);*/
+				
+			}
+		});
+		btnLoad.setBounds(21, 89, 89, 23);
+		frame.getContentPane().add(btnLoad);
 		
 	}
 

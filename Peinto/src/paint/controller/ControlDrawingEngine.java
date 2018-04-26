@@ -6,12 +6,14 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import paint.model.JSON;
 import paint.model.Shape;
+import paint.model.XML;
 import paint.view.Canvas;
 
 public class ControlDrawingEngine implements DrawingEngine {
 	private Shape currentShape;
-	//private Shape currentSelectedShape;
 	private ArrayList<Shape> shapes;
 	private CanvasMouseAdapter canvasMouseAdapter;
 	private DrawShapeMouseAdapter drawShapeMouseAdapter;
@@ -217,14 +219,28 @@ public class ControlDrawingEngine implements DrawingEngine {
 
 	@Override
 	public void save(String path) {
-		// TODO Auto-generated method stub
-		
+		String extension = path.substring(path.lastIndexOf(".")+1 );
+		if(extension.equals("xml")) {
+			XML xml = new XML();
+			xml.save(path, shapes);
+		}
+		else if(extension.equals("json")) {
+			JSON json = new JSON();
+			json.save(path, shapes);
+		}
 	}
 
 	@Override
 	public void load(String path) {
-		// TODO Auto-generated method stub
-		
+		String extension = path.substring(path.lastIndexOf(".")+1 );
+		if(extension.equals("xml")) {
+			XML xml = new XML();
+			shapes = xml.load(path);
+		}
+		else if(extension.equals("json")) {
+			JSON json = new JSON();
+			shapes = json.load(path);
+		}
 	}
 
 	@Override
