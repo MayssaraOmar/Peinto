@@ -1,6 +1,8 @@
 package paint.view;
 
 import paint.controller.ControlDrawingEngine;
+import paint.model.Shape;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -166,6 +168,7 @@ public class PaintWindow {
 		btnLoad.addActionListener(viewController.getSaveAndLoadActionListener());
 		btnLoad.setBounds(129, 34, 89, 23);
 		frame.getContentPane().add(btnLoad);
+		
 
 	}
 

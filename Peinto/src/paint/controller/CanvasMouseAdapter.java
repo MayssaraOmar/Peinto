@@ -50,7 +50,7 @@ public class CanvasMouseAdapter implements MouseListener, MouseMotionListener {
 			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionX", (double) endPoint.x);
 			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionY", (double) endPoint.y);
 		} else if (controlDrawingEngine.getState().equalsIgnoreCase("Moving")) {
-			controlDrawingEngine.saveState();
+			//controlDrawingEngine.saveState();
 			mousePoint = new Point(e.getPoint());
 		} else if (controlDrawingEngine.getState().equalsIgnoreCase("resizing")) {
 			mousePoint = new Point(e.getPoint());
@@ -75,15 +75,16 @@ public class CanvasMouseAdapter implements MouseListener, MouseMotionListener {
 				return;
 			controlDrawingEngine.move(e.getX(), e.getY(), mousePoint);
 			mousePoint = e.getPoint();
+			controlDrawingEngine.saveState();
 
 		} else if (controlDrawingEngine.getState().equalsIgnoreCase("resizing")) {
 			if (mousePoint == null)
 				return;
 			controlDrawingEngine.resize(mousePoint.getX(), mousePoint.getY(), e.getX(), e.getY());
+			controlDrawingEngine.saveState();
 
 		}
 		Canvas.getCanvas(controlDrawingEngine).repaint();
-		// https://stackoverflow.com/questions/5309150/jlabel-mouse-events-for-drag-and-drop/5312702#5312702
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import paint.model.Shape;
 
+//Memento DP
 public class Memento {
 	private ArrayList<Shape> shapesState = new ArrayList<Shape>();
 
@@ -14,20 +15,12 @@ public class Memento {
 		// memory pointed to by the fields
 		for (Shape shape : shapesState)
 			try {
-				// Map<String, Double> deepCopy = shape.getProperties();
 				Map<String, Double> deepCopy = new HashMap<String, Double>();
-
 				for (Map.Entry<String, Double> entry : shape.getProperties().entrySet()) {
 					deepCopy.put(entry.getKey(), entry.getValue());
 				}
 				this.shapesState.add((Shape) shape.clone());
 				this.shapesState.get(this.shapesState.size() - 1).setProperties(deepCopy);
-				/*
-				 * this.shapesState.add((Shape) shape.clone()); Map<String, Double> map = new
-				 * HashMap<>(shape.getProperties());
-				 * this.shapesState.get(this.shapesState.size()-1).setProperties(map);
-				 */
-				// System.out.println(this.shapesState.get(this.shapesState.size()-1).getProperties().get("EndPositionX"));
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
