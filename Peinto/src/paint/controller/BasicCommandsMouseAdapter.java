@@ -46,6 +46,10 @@ public class BasicCommandsMouseAdapter implements  MouseListener, MouseMotionLis
 			controlDrawingEngine.deselectAll();;
 			controlDrawingEngine.redo();
 		}
+		else if(compName.equalsIgnoreCase("deselectAll")) {
+			controlDrawingEngine.setState("DeselectingAll");
+			controlDrawingEngine.deselectAll();
+		}
 		
 	}
 

@@ -149,6 +149,14 @@ public class PaintWindow {
 		lblDelete.setBounds(77, 496, 56, 16);
 		frame.getContentPane().add(lblDelete);
 		
+
+		JLabel lbldeselectAll = new JLabel("deselect all");
+		lbldeselectAll.setName("deselectAll");
+		lbldeselectAll.setBounds(36, 133, 85, 14);
+		lbldeselectAll.addMouseListener(viewController.getBasicCommandsMouseAdapter());
+		frame.getContentPane().add(lbldeselectAll);
+
+
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 
