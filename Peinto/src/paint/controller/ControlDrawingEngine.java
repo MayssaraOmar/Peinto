@@ -226,18 +226,29 @@ public class ControlDrawingEngine implements DrawingEngine {
 		// TODO Auto-generated method stub
 		
 	}
+    private List <Class<? extends Shape>> supportedShapes= new ArrayList<>();
 
+	/*@Override
+    public List<Class<? extends Shape>> getSupportedShapes() {
+        return null;
+    }
+*/
+    @Override
+    public void installPluginShape(Class<? extends Shape> shapeClass) {
+    	System.out.println("HEEERE");
+        supportedShapes.add(shapeClass);
+    }
 	@Override
 	public List<Class<? extends Shape>> getSupportedShapes() {
 		// TODO Auto-generated method stub
-		return null;
+		 return supportedShapes;
 	}
 
-	@Override
+	/*@Override
 	public void installPluginShape(String jarPath) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 	
 	//Setters and Getters
 	public ColorLabelMouseAdapter getColorLabelMouseAdapter() {
