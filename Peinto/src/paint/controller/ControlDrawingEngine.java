@@ -24,7 +24,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 	private ColorLabelMouseAdapter colorLabelMouseAdapter;
 	private EditMouseAdapter editMouseAdapter;
 	private static Color strokeColor = Color.BLACK;
-	private static Color fillColor = Color.WHITE;
+	private static Color fillColor = new Color(255,255,255,0);
 	private String state = null;
 
 	public ControlDrawingEngine() {
@@ -106,7 +106,31 @@ public class ControlDrawingEngine implements DrawingEngine {
 		}
 	}
 
+	public void deleteAll() {
+		this.saveState();
+		if (state != null && state.equalsIgnoreCase("Deleting")) 
+			shapes.clear();
+	}
+	
 	public void resize(double xx, double yy, double xDragged, double yDragged) {
+		if (state != null && state.equalsIgnoreCase("resizing")) {
+	   	for (int i = 0; i < shapes.size(); i++) {
+				if (shapes.get(i).getProperties().get("selected") == 1.0) {
+					 int x = Math.min((int)xx, shapes.get(i).getPosition().x );
+					int y = Math.min((int)yy, shapes.get(i).getPosition().y);
+					if( xx > x) {
+					shapes.get(i).getProperties().put("EndPositionX", xDragged);
+					shapes.get(i).getProperties().put("EndPositionY", yDragged);
+					} else {
+						Point pointStart = new Point((int)xDragged ,(int)yDragged);
+						shapes.get(i).setPosition(pointStart);
+					}
+
+				}
+			}
+		}
+	}
+	/*public void resize(double xx, double yy, double xDragged, double yDragged) {
 		if (state != null && state.equalsIgnoreCase("resizing")) {
 			for (int i = 0; i < shapes.size(); i++) {
 				if (shapes.get(i).getProperties().get("selected") == 1.0) {
@@ -116,7 +140,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 				}
 			}
 		}
-	}
+	} */
 
 	@Override
 	public void addShape(Shape shape) {
@@ -171,6 +195,9 @@ public class ControlDrawingEngine implements DrawingEngine {
 			for (int i = (shapes.size() - 1); i >= 0; i--) {
 				if (shapes.get(i).contains(x, y)) {
 					shapes.get(i).getProperties().put("selected", 1.0);
+					Shape temp = shapes.get(i);
+					shapes.remove(i);
+					shapes.add(temp);
 					Canvas.getCanvas(this).repaint();
 					break;
 				}

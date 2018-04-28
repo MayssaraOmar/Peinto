@@ -36,6 +36,10 @@ public class EditMouseAdapter implements MouseListener {
 			Canvas.getCanvas(controlDrawingEngine).repaint();
 		} else if (compName.equalsIgnoreCase("resize")) {
 			controlDrawingEngine.setState("resizing");
+		} else if(compName.equalsIgnoreCase("DeleteAll")) {
+			controlDrawingEngine.setState("Deleting");
+			controlDrawingEngine.deleteAll();
+			Canvas.getCanvas(controlDrawingEngine).repaint();
 		}
 
 	}

@@ -26,7 +26,7 @@ public class Rectangle extends AbstractShape {
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int width = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
 		int height = Math.abs(getPosition().y - properties.get("EndPositionY").intValue());
-		((Graphics2D) g2D).setStroke(new BasicStroke(3));
+		((Graphics2D) g2D).setStroke(new BasicStroke(5));
 		if (this.getProperties().get("selected") == 1.0) {
 			float dash1[] = { 10.0f };
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
