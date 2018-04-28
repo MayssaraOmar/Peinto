@@ -4,6 +4,7 @@ import java.util.Map;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class Ellipse extends AbstractShape {
 	Ellipse2D oval2D = null;
@@ -33,6 +34,8 @@ public class Ellipse extends AbstractShape {
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
 					0.0f);
 			g2D.setStroke(dashed);
+			//putSelectCorners(g2D,getPosition().x,getPosition().y,properties.get("EndPositionX").intValue(),properties.get("EndPositionY").intValue());
+
 
 		}
 		oval2D = new Ellipse2D.Double(x, y, width, height);
@@ -51,6 +54,14 @@ public class Ellipse extends AbstractShape {
 		if (oval2D == null)
 			return false;
 		return (oval2D.contains(xx, yy));
+	}
+	private void putSelectCorners(Graphics2D g2D, int x1, int y1,int x2,int y2){
+		g2D.fillRect(x1, y1, 10, 10);
+		g2D.fillRect(x1, y2, 10, 10);
+		g2D.fillRect(x2, y1, 10, 10);
+		g2D.fillRect(x2, y2, 10, 10);
+
+		
 	}
 	/*
 	 * public void drawS(Object canvas) { int x = Math.min(this.getPosition().x ,
