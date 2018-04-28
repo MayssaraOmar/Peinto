@@ -1,5 +1,6 @@
 package paint.controller;
 
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import paint.view.Canvas;
@@ -7,6 +8,8 @@ import paint.view.Canvas;
 public class EditMouseAdapter implements MouseListener {
 
 	private ControlDrawingEngine controlDrawingEngine;
+	private Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+	private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 
 	public EditMouseAdapter(ControlDrawingEngine controlDrawingEngine) {
 		this.controlDrawingEngine = controlDrawingEngine;
@@ -38,15 +41,17 @@ public class EditMouseAdapter implements MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseEntered(MouseEvent e) {
+		
+		 e.getComponent().setCursor(handCursor);
+		
 
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void mouseExited(MouseEvent e) {
+		
+		e.getComponent().setCursor(defaultCursor);
 	}
 
 	@Override
