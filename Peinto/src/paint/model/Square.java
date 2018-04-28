@@ -23,7 +23,10 @@ public class Square extends AbstractShape {
 			return;
 
 		Graphics2D g2D = (Graphics2D) canvas;
-		g2D.setStroke(new BasicStroke(3));
+
+		g2D.setStroke(new BasicStroke(5));
+		
+
 
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());

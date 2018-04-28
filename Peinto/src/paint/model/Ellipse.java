@@ -27,7 +27,7 @@ public class Ellipse extends AbstractShape {
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int width = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
 		int height = Math.abs(getPosition().y - properties.get("EndPositionY").intValue());
-		g2D.setStroke(new BasicStroke(3));
+		g2D.setStroke(new BasicStroke(5));
 
 		if (this.getProperties().get("selected") == 1.0) {
 			/*

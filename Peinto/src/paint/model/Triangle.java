@@ -19,7 +19,7 @@ public class Triangle extends AbstractShape {
 				|| properties.get("EndPositionY") == null)
 			return;
 		Graphics2D g2D = (Graphics2D) canvas;
-		((Graphics2D) g2D).setStroke(new BasicStroke(3));
+		((Graphics2D) g2D).setStroke(new BasicStroke(5));
 		if (this.getProperties().get("selected") == 1.0) {
 			float dash1[] = { 10.0f };
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,

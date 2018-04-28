@@ -9,6 +9,7 @@ import javax.swing.JColorChooser;
 import paint.view.Canvas;
 
 import java.awt.Color;
+import java.awt.Cursor;
 
 public class ColorLabelMouseAdapter implements  MouseListener , MouseMotionListener{
 	
@@ -16,6 +17,8 @@ public class ColorLabelMouseAdapter implements  MouseListener , MouseMotionListe
 	public ColorLabelMouseAdapter(ControlDrawingEngine controlDrawingEngine){
 		this.controlDrawingEngine = controlDrawingEngine;
 	}
+	private Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+	private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		String colorType = e.getComponent().getName();
@@ -47,13 +50,13 @@ public class ColorLabelMouseAdapter implements  MouseListener , MouseMotionListe
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseEntered(MouseEvent e) {
+		e.getComponent().setCursor(handCursor);
 		
 	}
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseExited(MouseEvent e) {
+		e.getComponent().setCursor(defaultCursor);
 		
 	}
 

@@ -27,9 +27,11 @@ public class Circle extends AbstractShape {
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int radius = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
+
+
 		properties.put("EndPositionY",
 				(double) (getPosition().y - (getPosition().x - properties.get("EndPositionX").intValue())));
-		g2D.setStroke(new BasicStroke(3));
+		g2D.setStroke(new BasicStroke(5));
 		if (this.getProperties().get("selected") == 1.0) {
 
 			/*
