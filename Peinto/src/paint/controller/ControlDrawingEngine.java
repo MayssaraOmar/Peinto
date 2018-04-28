@@ -3,6 +3,7 @@ package paint.controller;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +82,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 						currentShape.setProperties(properties);
 						addShape(currentShape);
 						currentShape = null;
-						// Canvas.getCanvas(this).repaint();
+						
 					}
 				} catch (Exception ex) {
 					System.out.println("clone error");
@@ -130,17 +131,7 @@ public class ControlDrawingEngine implements DrawingEngine {
 			}
 		}
 	}
-	/*public void resize(double xx, double yy, double xDragged, double yDragged) {
-		if (state != null && state.equalsIgnoreCase("resizing")) {
-			for (int i = 0; i < shapes.size(); i++) {
-				if (shapes.get(i).getProperties().get("selected") == 1.0) {
-					shapes.get(i).getProperties().put("EndPositionX", xDragged);
-					shapes.get(i).getProperties().put("EndPositionY", yDragged);
-
-				}
-			}
-		}
-	} */
+	
 
 	@Override
 	public void addShape(Shape shape) {
@@ -177,31 +168,23 @@ public class ControlDrawingEngine implements DrawingEngine {
 	public void undo() {
 		Invoker invoker = new Invoker(new UndoCommand(originator, careTaker));
 		shapes = invoker.executeCommand();
-		// originator.getStateFromMemento(careTaker.undo());
-		// shapes = originator.getState();
-		// Canvas.getCanvas(this).revalidate();
-		// Canvas.getCanvas(this).repaint();
+		
 	}
 
 	@Override
 	public void redo() {
 		Invoker invoker = new Invoker(new RedoCommand(originator, careTaker));
 		shapes = invoker.executeCommand();
-		// originator.getStateFromMemento(careTaker.redo());
-		// shapes = (ArrayList<Shape>) originator.getState().clone();
-		// shapes = originator.getState();
-		// Canvas.getCanvas(this).revalidate();
-		// Canvas.getCanvas(this).repaint();
+		
 	}
 
 	public void select(int x, int y) {
 		if (state != null && state.equalsIgnoreCase("Selecting")) {
+			int size = shapes.size();
 			for (int i = (shapes.size() - 1); i >= 0; i--) {
 				if (shapes.get(i).contains(x, y)) {
 					shapes.get(i).getProperties().put("selected", 1.0);
-					Shape temp = shapes.get(i);
-					shapes.remove(i);
-					shapes.add(temp);
+					Collections.swap(shapes, i, size-1);
 					Canvas.getCanvas(this).repaint();
 					break;
 				}
@@ -249,7 +232,6 @@ public class ControlDrawingEngine implements DrawingEngine {
 					Double currY = shape.getProperties().get("EndPositionY");
 					shape.getProperties().put("EndPositionX", currX + dx);
 					shape.getProperties().put("EndPositionY", currY + dy);
-					// Canvas.getCanvas(this).repaint();
 				}
 			}
 		}

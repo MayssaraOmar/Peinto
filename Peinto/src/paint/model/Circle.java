@@ -28,18 +28,15 @@ public class Circle extends AbstractShape {
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int radius = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
 
-
 		properties.put("EndPositionY",
 				(double) (getPosition().y - (getPosition().x - properties.get("EndPositionX").intValue())));
 		g2D.setStroke(new BasicStroke(5));
 		if (this.getProperties().get("selected") == 1.0) {
 
-			/*
-			 * float dash1[] = { 10.0f }; BasicStroke dashed = new BasicStroke(3.0f,
-			 * BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-			 * g2D.setStroke(dashed);
-			 */
-			putSelectCorners(g2D, x, y, radius);
+			float dash1[] = { 10.0f };
+			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
+					0.0f);
+			g2D.setStroke(dashed);
 
 		}
 
@@ -58,13 +55,5 @@ public class Circle extends AbstractShape {
 		if (oval2D == null)
 			return false;
 		return (oval2D.contains(xx, yy));
-	}
-
-	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int radius) {
-		g2D.fillRect(x1, y1, 10, 10);
-		g2D.fillRect(x1, y1 + radius, 10, 10);
-		g2D.fillRect(x1 + radius, y1, 10, 10);
-		g2D.fillRect(x1 + radius, y1 + radius, 10, 10);
-
 	}
 }

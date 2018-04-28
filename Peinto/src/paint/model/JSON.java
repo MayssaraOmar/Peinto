@@ -1,131 +1,3 @@
-/*package paint.model;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import com.sun.prism.paint.Color;
-
-public class JSON implements SaveAndLoad {
-
-	@Override
-	public void save(String path, ArrayList<Shape> shapes) {
-		
-			 
-			 JSONObject BigShapeObj = new JSONObject();
-			 BigShapeObj.put("noOfShapes",""+shapes.size()); 
-			 JSONObject shapeObj = new JSONObject();
-			 for (int i=0; i<shapes.size() ;i++) {
-				 shapeObj.put("Name", shapes.get(i).getClass().getCanonicalName());
-				 //"#"+Integer.toHexString(your_color.getRGB()).substring(2);
-				 shapeObj.put("Color",  "#"+Integer.toHexString(shapes.get(i).getColor().getRGB()).substring(2) );
-			 //shapeObj.put("Color",  shapes.get(i).getColor());
-			 //shapeObj.put("FillColor",  shapes.get(i).getFillColor());
-				 shapeObj.put("FillColor",  "#"+Integer.toHexString(shapes.get(i).getColor().getRGB()).substring(2) );
-			 shapeObj.put("PositionX",  shapes.get(i).getPosition().getX());
-			 shapeObj.put("PositionY",  shapes.get(i).getPosition().getY());
-
-			 shapeObj.put("Properties",  shapes.get(i).getProperties());
-			 BigShapeObj.put(""+i,shapeObj); 
-			 		 
-		 } 
-			 
-			 
-			 try {
-		            
-		            // Writing to a file
-		            File file=new File(path);
-		            file.createNewFile();
-		            FileWriter fileWriter = new FileWriter(file);
-		            
-		            fileWriter.write(shapeObj.toJSONString());
-		            System.out.println(shapeObj); //Same printing
-		            fileWriter.flush();
-		            fileWriter.close();
-		 
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		  }
-
-
-///////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-@Override
-public ArrayList<Shape> load(String path) {
-	// TODO Auto-generated method stub
-	 ArrayList<Shape> arr = new ArrayList<Shape>();
-	 JSONParser parser = new JSONParser();
-	 try {
-		 File file = new File(path);
-		 Object obj = parser.parse(new FileReader(file));
-		 
-		   JSONObject jsonObject = (JSONObject) obj;
-		   int size=Integer.parseInt(((String)jsonObject.get("noOfShapes")));
-		   Shape[] shape = new Shape[] {} ; //it's different here
-		   
-		   //hena
-		   for (int i=0;i<size;i++) {
-		 	   
-		 	   
-		 	   
-		 	   JSONObject jShapes= (JSONObject)jsonObject.get(i+"");
-		 	   Class o=null;
-		 	   try {
-		 		   
-		 		   o=Class.forName((String)jShapes.get("Name"));
-		 		   	   
-		 	   }
-
-		 	   catch(Exception e) {}
-		 	   if(o!=null) {
-		 		   Shape s= (Shape) o.newInstance();
-		 		  // s.setPosition(Position);
-		 		   //java.awt.Color[r=255,g=255,b=255]
-		 		   System.out.println(jShapes.get("Color").toString());
-		 	  // s.setColor(new Color(jShapes.get("Color")));
-		 		   //if(jShapes.get("FillColor")!=null)
-		 			 //  s.setFillColor(new Color(((Color)jShapes.get("FillColor")).intValue()));
-		 		   //s.setProperties((java.util.Map<String, Double>)jShapes.get("Properties"));
-		 		   //s.setPosition(new properties  (((Number)jShapes.get("PositionX")).intValue(),((Number)jShapes.get("PositionY")).intValue()));
-		 		   //arr.add(s);
-		 		   
-		 	   }
-		   }
-		   }
-		   catch (FileNotFoundException e) {
-		 	   e.printStackTrace();
-		 	  } catch (IOException e) {
-		 	   e.printStackTrace();
-		 	  } 
-		  catch (InstantiationException e) {
-		 		// TODO Auto-generated catch block
-		 		e.printStackTrace();
-		 	} catch (IllegalAccessException e) {
-		 		// TODO Auto-generated catch block
-		 		e.printStackTrace();
-		 	} catch (org.json.simple.parser.ParseException e1) {
-		 		// TODO Auto-generated catch block
-		 		e1.printStackTrace();
-		 	}
-		   
-		  return arr;
-
-		 }
-			    
-}
-*/
-
 package paint.model;
 
 import java.awt.Color;
@@ -140,37 +12,31 @@ import org.json.simple.parser.JSONParser;
 
 public class JSON implements SaveAndLoad {
 
-	public JSON() {
-	}
+	//public JSON() {
+	//}
 
 	@Override
 	public void save(String path, ArrayList<Shape> shapes) {
 
+		
 		JSONObject jsonBigObject = new JSONObject();
-		jsonBigObject.put("ShapesSize", Integer.toString(shapes.size()));
-
-		for (Shape shape : shapes) {
-			JSONObject jsonShape = getJSONShape(shape);
-			jsonBigObject.put(Integer.toString(shapes.size() - 1), jsonShape);
-		}
-		writeJSONObjectToFile(path, jsonBigObject);
-
-	}
-
-	private JSONObject getJSONShape(Shape shape) {
 		JSONObject JSONShape = new JSONObject();
+		jsonBigObject.put("ShapesSize", Integer.toString(shapes.size()));
+		
+		 
+		for (int i=0;i<shapes.size();i++) {
+			Shape Oneshape=shapes.get(i);
+          JSONShape= new JSONObject();
+		JSONShape.put("Name", Oneshape.getClass().getCanonicalName());
+		JSONShape.put("PositionX", Oneshape.getPosition().getX());
+		JSONShape.put("PositionY", Oneshape.getPosition().getY());
+		JSONShape.put("FillColor", (Oneshape.getFillColor() == null) ? null : Oneshape.getFillColor().getRGB());
+		JSONShape.put("Color", (Oneshape.getColor() == null) ? null : Oneshape.getColor().getRGB());
+		JSONShape.put("Properties", Oneshape.getProperties());
+        jsonBigObject.put("" + i, JSONShape);
 
-		JSONShape.put("Name", shape.getClass().getCanonicalName());
-		JSONShape.put("PositionX", shape.getPosition().getX());
-		JSONShape.put("PositionY", shape.getPosition().getY());
-		JSONShape.put("FillColor", (shape.getFillColor() == null) ? null : shape.getFillColor().getRGB());
-		JSONShape.put("Color", (shape.getColor() == null) ? null : shape.getColor().getRGB());
-		JSONShape.put("Properties", shape.getProperties());
-
-		return JSONShape;
-	}
-
-	private void writeJSONObjectToFile(String path, JSONObject jsonBigObject) {
+		}
+		//jsonBigObject.put("" , JSONShape); // adding one json object to a larger json object "nested JSON object"
 
 		try {
 			FileWriter fileWriter = new FileWriter(path);
@@ -180,6 +46,8 @@ public class JSON implements SaveAndLoad {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	@Override
 	public ArrayList<Shape> load(String path) {
@@ -230,3 +98,4 @@ public class JSON implements SaveAndLoad {
 
 	}
 }
+	
