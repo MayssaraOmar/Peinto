@@ -21,6 +21,7 @@ public class SaveAndLoadActionListener implements ActionListener {
 		JButton o = (JButton) e.getSource();
 		String name = o.getName();
 		if (name.equalsIgnoreCase("Save")) {
+			controlDrawingEngine.deselectAll();
 			javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
 
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("xml and json files", "xml", "json");

@@ -265,10 +265,12 @@ public class ControlDrawingEngine implements DrawingEngine {
 			XML xml = new XML();
 			shapes = xml.load(path);
 			careTaker.clearUndoRedo();
+			saveState();
 		} else if (extension.equals("json")) {
 			JSON json = new JSON();
 			shapes = json.load(path);
 			careTaker.clearUndoRedo();
+			saveState();
 		}
 	}
 

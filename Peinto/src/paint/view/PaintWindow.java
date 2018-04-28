@@ -41,6 +41,7 @@ public class PaintWindow {
 	private final JLabel lblResize = new JLabel("");
 	private final JLabel lblDelete = new JLabel("");
 	private final JLabel lblDeleteAll = new JLabel("");
+	private final JLabel lblAnime = new JLabel("");
 
 	/**
 	 * Create the application.
@@ -270,6 +271,10 @@ public class PaintWindow {
 		separator_1.setBackground(new Color(255, 255, 255));
 		separator_1.setBounds(2, 323, 127, 2);
 		panel.add(separator_1);
+		lblAnime.setIcon(new ImageIcon(PaintWindow.class.getResource("/paint/view/icons/rsz_anime.png")));
+		lblAnime.setBounds(1221, -13, 241, 225);
+		
+		frame.getContentPane().add(lblAnime);
 		lbldeselectAll.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		btnSave.addActionListener(viewController.getSaveAndLoadActionListener());
 		btnLoad.addActionListener(viewController.getSaveAndLoadActionListener());

@@ -12,31 +12,28 @@ import org.json.simple.parser.JSONParser;
 
 public class JSON implements SaveAndLoad {
 
-	//public JSON() {
-	//}
+	
 
 	@Override
 	public void save(String path, ArrayList<Shape> shapes) {
 
-		
 		JSONObject jsonBigObject = new JSONObject();
 		JSONObject JSONShape = new JSONObject();
 		jsonBigObject.put("ShapesSize", Integer.toString(shapes.size()));
-		
-		 
-		for (int i=0;i<shapes.size();i++) {
-			Shape Oneshape=shapes.get(i);
-          JSONShape= new JSONObject();
-		JSONShape.put("Name", Oneshape.getClass().getCanonicalName());
-		JSONShape.put("PositionX", Oneshape.getPosition().getX());
-		JSONShape.put("PositionY", Oneshape.getPosition().getY());
-		JSONShape.put("FillColor", (Oneshape.getFillColor() == null) ? null : Oneshape.getFillColor().getRGB());
-		JSONShape.put("Color", (Oneshape.getColor() == null) ? null : Oneshape.getColor().getRGB());
-		JSONShape.put("Properties", Oneshape.getProperties());
-        jsonBigObject.put("" + i, JSONShape);
+
+		for (int i = 0; i < shapes.size(); i++) {
+			Shape Oneshape = shapes.get(i);
+			JSONShape = new JSONObject();
+			JSONShape.put("Name", Oneshape.getClass().getCanonicalName());
+			JSONShape.put("PositionX", Oneshape.getPosition().getX());
+			JSONShape.put("PositionY", Oneshape.getPosition().getY());
+			JSONShape.put("FillColor", (Oneshape.getFillColor() == null) ? null : Oneshape.getFillColor().getRGB());
+			JSONShape.put("Color", (Oneshape.getColor() == null) ? null : Oneshape.getColor().getRGB());
+			JSONShape.put("Properties", Oneshape.getProperties());
+			jsonBigObject.put(Integer.toString(i), JSONShape);
 
 		}
-		//jsonBigObject.put("" , JSONShape); // adding one json object to a larger json object "nested JSON object"
+		
 
 		try {
 			FileWriter fileWriter = new FileWriter(path);
@@ -46,8 +43,6 @@ public class JSON implements SaveAndLoad {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	@Override
 	public ArrayList<Shape> load(String path) {
@@ -98,4 +93,3 @@ public class JSON implements SaveAndLoad {
 
 	}
 }
-	
