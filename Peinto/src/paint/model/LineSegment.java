@@ -21,12 +21,10 @@ public class LineSegment extends AbstractShape {
 		Graphics2D g2D = (Graphics2D) canvas;
 		g2D.setStroke(new BasicStroke(3));
 		if (this.getProperties().get("selected") == 1.0) {
-			/*float dash1[] = { 10.0f };
+			float dash1[] = { 10.0f };
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
 					0.0f);
-			g2D.setStroke(dashed);*/
-			putSelectCorners(g2D, getPosition().x, getPosition().y, properties.get("EndPositionX").intValue(),
-					properties.get("EndPositionY").intValue());
+			g2D.setStroke(dashed);
 
 		}
 		line = new Line2D.Double(this.getPosition().x, this.getPosition().y,
@@ -47,11 +45,6 @@ public class LineSegment extends AbstractShape {
 		if (line == null)
 			return false;
 		return (line.intersects(boxX, boxY, width, height));
-
-	}
-	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int x2, int y2) {
-		g2D.fillRect(x1-10, y1-10, 10, 10);
-		g2D.fillRect(x2, y2, 10, 10);
 
 	}
 

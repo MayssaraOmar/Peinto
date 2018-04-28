@@ -31,4 +31,3 @@ public class Originator {
 		this.shapesState = memento.getState();
 	}
 }
-// https://www.tutorialspoint.com/design_pattern/memento_pattern.htm

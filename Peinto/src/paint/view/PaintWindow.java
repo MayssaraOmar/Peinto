@@ -108,7 +108,7 @@ public class PaintWindow {
 
 		lblCircle.addMouseListener(viewController.getDrawShapeMouseAdapter());
 		lblCircle.setName("circle");
-		lblSquare.setBounds(13, 171, 50, 50);
+		lblSquare.setBounds(13, 157, 50, 50);
 		panel.add(lblSquare);
 		lblSquare.setBackground(new Color(255, 255, 255));
 		lblSquare.setToolTipText("Square");
@@ -120,7 +120,7 @@ public class PaintWindow {
 		lblSquare.setName("square");
 		lblLine.setBackground(new Color(255, 255, 255));
 		lblLine.setIcon(new ImageIcon(PaintWindow.class.getResource("/paint/view/icons/icons8-line-30.png")));
-		lblLine.setBounds(73, 157, 50, 50);
+		lblLine.setBounds(65, 157, 58, 50);
 		lblLine.setToolTipText("Line");
 		panel.add(lblLine);
 		lblLine.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -139,7 +139,7 @@ public class PaintWindow {
 		lblRectangle
 				.setIcon(new ImageIcon(PaintWindow.class.getResource("/paint/view/icons/icons8-rectangular-32.png")));
 		lblRectangle.setBackground(new Color(255, 255, 255));
-		lblRectangle.setBounds(73, 200, 50, 50);
+		lblRectangle.setBounds(65, 200, 58, 50);
 		lblRectangle.setToolTipText("Rectangle");
 		panel.add(lblRectangle);
 		lblRectangle.setFont(new Font("Tahoma", Font.PLAIN, 16));

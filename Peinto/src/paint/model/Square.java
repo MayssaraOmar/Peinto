@@ -25,8 +25,6 @@ public class Square extends AbstractShape {
 		Graphics2D g2D = (Graphics2D) canvas;
 
 		g2D.setStroke(new BasicStroke(5));
-		
-
 
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
@@ -36,11 +34,10 @@ public class Square extends AbstractShape {
 
 		square2d = new Rectangle2D.Double(x, y, sideLength, sideLength);
 		if (this.getProperties().get("selected") == 1.0) {
-			/*float dash1[] = { 10.0f };
+			float dash1[] = { 10.0f };
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
 					0.0f);
-			g2D.setStroke(dashed);*/
-			putSelectCorners(g2D, x, y, sideLength);
+			g2D.setStroke(dashed);
 
 		}
 
@@ -60,11 +57,4 @@ public class Square extends AbstractShape {
 		return (square2d.contains(xx, yy));
 	}
 
-	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int sideLength) {
-		g2D.fillRect(x1 - 10, y1 - 10, 10, 10);
-		g2D.fillRect(x1 - 10, y1 + sideLength, 10, 10);
-		g2D.fillRect(x1 + sideLength, y1 - 10, 10, 10);
-		g2D.fillRect(x1 + sideLength, y1 + sideLength, 10, 10);
-
-	}
 }

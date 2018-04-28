@@ -53,7 +53,7 @@ public class CanvasMouseAdapter implements MouseListener, MouseMotionListener {
 			controlDrawingEngine.getCurrentShape().getProperties().put("EndPositionY", (double) endPoint.y);
 		} 
 		else if (controlDrawingEngine.getState().equalsIgnoreCase("Moving")) {
-			//controlDrawingEngine.saveState();
+	
 			mousePoint = new Point(e.getPoint());
 		} 
 		else if (controlDrawingEngine.getState().equalsIgnoreCase("resizing")) {
