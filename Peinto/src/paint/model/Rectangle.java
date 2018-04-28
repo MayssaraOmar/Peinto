@@ -28,10 +28,13 @@ public class Rectangle extends AbstractShape {
 		int height = Math.abs(getPosition().y - properties.get("EndPositionY").intValue());
 		((Graphics2D) g2D).setStroke(new BasicStroke(3));
 		if (this.getProperties().get("selected") == 1.0) {
-			float dash1[] = { 10.0f };
+			/*float dash1[] = { 10.0f };
 			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
 					0.0f);
-			g2D.setStroke(dashed);
+			g2D.setStroke(dashed);*/
+			putSelectCorners(g2D, getPosition().x, getPosition().y, properties.get("EndPositionX").intValue(),
+					properties.get("EndPositionY").intValue());
+
 
 		}
 		rectangle2d = new Rectangle2D.Double(x, y, width, height);
@@ -47,31 +50,18 @@ public class Rectangle extends AbstractShape {
 	}
 
 	public boolean contains(double xx, double yy) {
-		/*
-		 * Double width = this.getProperties().get("Width"); Double height =
-		 * this.getProperties().get("Height"); int x = Math.min(this.getPosition().x ,
-		 * this.getProperties().get("EndPositionX").intValue()); int y = Math.min(
-		 * this.getPosition().y ,this.getProperties().get("EndPositionY").intValue() );
-		 * Rectangle2D rectangle2d = new Rectangle2D.Double(x,y,width,height);
-		 */
 		if (rectangle2d == null)
 			return false;
 		return (rectangle2d.contains(xx, yy));
 	}
-	/*
-	 * public void drawS(Object canvas) { Double width =
-	 * this.getProperties().get("Width"); Double height =
-	 * this.getProperties().get("Height"); int x = Math.min(this.getPosition().x ,
-	 * this.getProperties().get("EndPositionX").intValue()); int y = Math.min(
-	 * this.getPosition().y ,this.getProperties().get("EndPositionY").intValue() );
-	 * Graphics2D g2D = (Graphics2D) canvas; float dash1[] = {10.0f}; BasicStroke
-	 * dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
-	 * 10.0f, dash1, 0.0f);
-	 * 
-	 * g2D.setStroke(dashed); g2D.setColor(this.getColor()); g2D.drawRect(x, y,
-	 * width.intValue(), height.intValue()); g2D.setColor(this.getFillColor());
-	 * g2D.fillRect(x, y, width.intValue(), height.intValue());
-	 * System.out.println("Draw SSSSS"); }
-	 */
+	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int x2, int y2) {
+		
+		
+		g2D.fillRect(x1-10, y1-10, 10, 10);
+		g2D.fillRect(x1-10, y2, 10, 10);
+		g2D.fillRect(x2, y1-10, 10, 10);
+		g2D.fillRect(x2, y2, 10, 10);
+
+	}
 
 }

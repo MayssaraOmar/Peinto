@@ -27,15 +27,17 @@ public class Circle extends AbstractShape {
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int radius = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
-		//properties.put("EndPositionY",(double) (getPosition().y-(getPosition().x - properties.get("EndPositionX").intValue())));
+		properties.put("EndPositionY",
+				(double) (getPosition().y - (getPosition().x - properties.get("EndPositionX").intValue())));
 		g2D.setStroke(new BasicStroke(3));
 		if (this.getProperties().get("selected") == 1.0) {
-			
-			float dash1[] = { 10.0f };
-			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
-					0.0f);
-			g2D.setStroke(dashed);
-			//putSelectCorners(g2D,getPosition().x,getPosition().y,properties.get("EndPositionX").intValue(),properties.get("EndPositionY").intValue());
+
+			/*
+			 * float dash1[] = { 10.0f }; BasicStroke dashed = new BasicStroke(3.0f,
+			 * BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+			 * g2D.setStroke(dashed);
+			 */
+			putSelectCorners(g2D, x, y, radius);
 
 		}
 
@@ -55,41 +57,12 @@ public class Circle extends AbstractShape {
 			return false;
 		return (oval2D.contains(xx, yy));
 	}
-	private void putSelectCorners(Graphics2D g2D, int x1, int y1,int x2,int y2){
-		//Graphics2D g2D = (		Graphics2D) canvas;
-		//Rectangle2D corner1 = new Rectangle2D.Double(x1, y1, 10, 10);
-		Rectangle2D corner2 = new Rectangle2D.Double(x1, y2, 3, 3);
-		Rectangle2D corner3 = new Rectangle2D.Double(x2, y1, 3, 3);
-		Rectangle2D corner4 = new Rectangle2D.Double(x2, y2, 3, 3);
-		g2D.fillRect(x1, y1, 10, 10);
-		g2D.fillRect(x1, y2, 10, 10);
-		g2D.fillRect(x2, y1, 10, 10);
-		g2D.fillRect(x2, y2, 10, 10);
 
-		/*g2D.draw(corner1);
-		g2D.draw(corner2);
-		g2D.draw(corner3);
-		g2D.draw(corner4);*/
-		
+	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int radius) {
+		g2D.fillRect(x1, y1, 10, 10);
+		g2D.fillRect(x1, y1 + radius, 10, 10);
+		g2D.fillRect(x1 + radius, y1, 10, 10);
+		g2D.fillRect(x1 + radius, y1 + radius, 10, 10);
+
 	}
 }
-
-	/*
-	 * public void drawS(Object canvas) { int x = Math.min(this.getPosition().x ,
-	 * this.getProperties().get("EndPositionX").intValue()); int y = Math.min(
-	 * this.getPosition().y ,this.getProperties().get("EndPositionY").intValue() );
-	 * Graphics2D g2D = (Graphics2D) canvas; float dash1[] = {10.0f}; BasicStroke
-	 * dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
-	 * 10.0f, dash1, 0.0f);
-	 * 
-	 * g2D.setStroke(dashed); g2D.setColor(this.getColor()); g2D.drawOval(x,y,
-	 * this.getProperties().get("Radius").intValue(),
-	 * this.getProperties().get("Radius").intValue());
-	 * g2D.setColor(this.getFillColor()); g2D.fillOval(x,y,
-	 * this.getProperties().get("Radius").intValue(),
-	 * this.getProperties().get("Radius").intValue());
-	 * 
-	 * }
-	 */
-
-
