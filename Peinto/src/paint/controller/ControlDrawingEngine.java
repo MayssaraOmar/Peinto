@@ -175,19 +175,23 @@ public class ControlDrawingEngine implements DrawingEngine {
 
 	@Override
 	public void undo() {
-		originator.getStateFromMemento(careTaker.undo());
-		shapes = originator.getState();
-		Canvas.getCanvas(this).revalidate();
-		Canvas.getCanvas(this).repaint();
+		Invoker invoker = new Invoker(new UndoCommand(originator, careTaker));
+		shapes = invoker.executeCommand();
+		// originator.getStateFromMemento(careTaker.undo());
+		// shapes = originator.getState();
+		// Canvas.getCanvas(this).revalidate();
+		// Canvas.getCanvas(this).repaint();
 	}
 
 	@Override
 	public void redo() {
-		originator.getStateFromMemento(careTaker.redo());
+		Invoker invoker = new Invoker(new RedoCommand(originator, careTaker));
+		shapes = invoker.executeCommand();
+		// originator.getStateFromMemento(careTaker.redo());
 		// shapes = (ArrayList<Shape>) originator.getState().clone();
-		shapes = originator.getState();
-		Canvas.getCanvas(this).revalidate();
-		Canvas.getCanvas(this).repaint();
+		// shapes = originator.getState();
+		// Canvas.getCanvas(this).revalidate();
+		// Canvas.getCanvas(this).repaint();
 	}
 
 	public void select(int x, int y) {
@@ -249,15 +253,14 @@ public class ControlDrawingEngine implements DrawingEngine {
 				}
 			}
 		}
-
 	}
 
 	@Override
 	public void save(String path) {
-		if(path==null)
+		if (path == null)
 			return;
 		String extension = path.substring(path.lastIndexOf(".") + 1);
-		if(extension == null)
+		if (extension == null)
 			return;
 		if (extension.equals("xml")) {
 			XML xml = new XML();
@@ -265,16 +268,16 @@ public class ControlDrawingEngine implements DrawingEngine {
 		} else if (extension.equals("json")) {
 			JSON json = new JSON();
 			json.save(path, shapes);
-		} 		
+		}
 
 	}
 
 	@Override
 	public void load(String path) {
-		if(path==null)
+		if (path == null)
 			return;
 		String extension = path.substring(path.lastIndexOf(".") + 1);
-		if(extension == null)
+		if (extension == null)
 			return;
 		if (extension.equals("xml")) {
 			XML xml = new XML();
@@ -286,7 +289,6 @@ public class ControlDrawingEngine implements DrawingEngine {
 			careTaker.clearUndoRedo();
 		}
 	}
-
 
 	@Override
 	public List<Class<? extends Shape>> getSupportedShapes() {

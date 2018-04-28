@@ -3,8 +3,9 @@ package paint.controller;
 import java.util.ArrayList;
 import paint.model.Shape;
 
+// Memento DP
 public class Originator {
-	private ArrayList<Shape> shapesState = null;
+	private ArrayList<Shape> shapesState;
 
 	public void setState(ArrayList<Shape> shapesState) {
 		if (shapesState == null)
@@ -23,9 +24,9 @@ public class Originator {
 	}
 
 	public void getStateFromMemento(Memento memento) {
+
 		if (memento == null || memento.getState() == null)
 			return;
-
 		// Shallow copy: i.e., only the memory address is copied.
 		this.shapesState = memento.getState();
 	}

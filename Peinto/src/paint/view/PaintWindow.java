@@ -2,7 +2,11 @@ package paint.view;
 
 import paint.controller.ControlDrawingEngine;
 
+
 import javax.swing.ImageIcon;
+
+import paint.model.Shape;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -269,6 +273,7 @@ public class PaintWindow {
 		lbldeselectAll.addMouseListener(viewController.getBasicCommandsMouseAdapter());
 		btnSave.addActionListener(viewController.getSaveAndLoadActionListener());
 		btnLoad.addActionListener(viewController.getSaveAndLoadActionListener());
+
 
 	}
 

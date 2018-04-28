@@ -2,6 +2,7 @@ package paint.controller;
 
 import java.util.LinkedList;
 
+// Memento DP
 public class CareTaker {
 	private LinkedList<Memento> undoList = new LinkedList<Memento>();
 	private LinkedList<Memento> redoList = new LinkedList<Memento>();

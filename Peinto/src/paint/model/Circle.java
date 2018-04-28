@@ -4,6 +4,7 @@ import java.util.Map;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class Circle extends AbstractShape {
 	Ellipse2D oval2D = null;
@@ -26,12 +27,19 @@ public class Circle extends AbstractShape {
 		int x = Math.min(getPosition().x, properties.get("EndPositionX").intValue());
 		int y = Math.min(getPosition().y, properties.get("EndPositionY").intValue());
 		int radius = Math.abs(getPosition().x - properties.get("EndPositionX").intValue());
+
+
+		properties.put("EndPositionY",
+				(double) (getPosition().y - (getPosition().x - properties.get("EndPositionX").intValue())));
 		g2D.setStroke(new BasicStroke(5));
 		if (this.getProperties().get("selected") == 1.0) {
-			float dash1[] = { 10.0f };
-			BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
-					0.0f);
-			g2D.setStroke(dashed);
+
+			/*
+			 * float dash1[] = { 10.0f }; BasicStroke dashed = new BasicStroke(3.0f,
+			 * BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+			 * g2D.setStroke(dashed);
+			 */
+			putSelectCorners(g2D, x, y, radius);
 
 		}
 
@@ -52,22 +60,11 @@ public class Circle extends AbstractShape {
 		return (oval2D.contains(xx, yy));
 	}
 
-	/*
-	 * public void drawS(Object canvas) { int x = Math.min(this.getPosition().x ,
-	 * this.getProperties().get("EndPositionX").intValue()); int y = Math.min(
-	 * this.getPosition().y ,this.getProperties().get("EndPositionY").intValue() );
-	 * Graphics2D g2D = (Graphics2D) canvas; float dash1[] = {10.0f}; BasicStroke
-	 * dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
-	 * 10.0f, dash1, 0.0f);
-	 * 
-	 * g2D.setStroke(dashed); g2D.setColor(this.getColor()); g2D.drawOval(x,y,
-	 * this.getProperties().get("Radius").intValue(),
-	 * this.getProperties().get("Radius").intValue());
-	 * g2D.setColor(this.getFillColor()); g2D.fillOval(x,y,
-	 * this.getProperties().get("Radius").intValue(),
-	 * this.getProperties().get("Radius").intValue());
-	 * 
-	 * }
-	 */
+	private void putSelectCorners(Graphics2D g2D, int x1, int y1, int radius) {
+		g2D.fillRect(x1, y1, 10, 10);
+		g2D.fillRect(x1, y1 + radius, 10, 10);
+		g2D.fillRect(x1 + radius, y1, 10, 10);
+		g2D.fillRect(x1 + radius, y1 + radius, 10, 10);
 
+	}
 }

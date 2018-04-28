@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import paint.view.Canvas;
+
 public class BasicCommandsMouseAdapter implements MouseListener, MouseMotionListener {
 	private ControlDrawingEngine controlDrawingEngine;
 	private Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
@@ -29,26 +31,34 @@ public class BasicCommandsMouseAdapter implements MouseListener, MouseMotionList
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		String compName = e.getComponent().getName();
+		
 		if (compName.equalsIgnoreCase("select")) {
 			System.out.println("select label selected");
 			controlDrawingEngine.setState("Selecting");
-		} else if (compName.equalsIgnoreCase("deselect")) {
+		} 
+		else if (compName.equalsIgnoreCase("deselect")) {
 			System.out.println("deselect label selected");
 			controlDrawingEngine.setState("Deselecting");
-		} else if (compName.equalsIgnoreCase("undo")) {
+		} 
+		else if (compName.equalsIgnoreCase("undo")) {
 			controlDrawingEngine.setState("Undoing");
 			System.out.println("undo label selected");
 			// must deselect all shapes
 			controlDrawingEngine.deselectAll();
 			controlDrawingEngine.undo();
-		} else if (compName.equalsIgnoreCase("redo")) {
+			Canvas.getCanvas(controlDrawingEngine).revalidate();
+			Canvas.getCanvas(controlDrawingEngine).repaint();
+		} 
+		else if (compName.equalsIgnoreCase("redo")) {
 			controlDrawingEngine.setState("Redoing");
 			System.out.println("redo label selected");
 			// must deselect all shapes
 			controlDrawingEngine.deselectAll();
-			;
 			controlDrawingEngine.redo();
-		} else if (compName.equalsIgnoreCase("deselectAll")) {
+			Canvas.getCanvas(controlDrawingEngine).revalidate();
+			Canvas.getCanvas(controlDrawingEngine).repaint();
+		} 
+		else if (compName.equalsIgnoreCase("deselectAll")) {
 			controlDrawingEngine.setState("DeselectingAll");
 			controlDrawingEngine.deselectAll();
 		}

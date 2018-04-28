@@ -23,18 +23,21 @@ public class EditMouseAdapter implements MouseListener {
 			return;
 		if (compName.equalsIgnoreCase("move")) {
 			controlDrawingEngine.setState("Moving");
-			System.out.println("moooove");
-		} else if (compName.equalsIgnoreCase("delete")) {
+			System.out.println("move label selected");
+		} 
+		else if (compName.equalsIgnoreCase("delete")) {
 			controlDrawingEngine.setState("Deleting");
 			System.out.println("delete label selected");
 			controlDrawingEngine.delete();
 			Canvas.getCanvas(controlDrawingEngine).repaint();
-		} else if (compName.equalsIgnoreCase("copy")) {
+		} 
+		else if (compName.equalsIgnoreCase("copy")) {
 			controlDrawingEngine.setState("Copying");
 			System.out.println("copy label selected");
 			controlDrawingEngine.copy();
 			Canvas.getCanvas(controlDrawingEngine).repaint();
-		} else if (compName.equalsIgnoreCase("resize")) {
+		} 
+		else if (compName.equalsIgnoreCase("resize")) {
 			controlDrawingEngine.setState("resizing");
 		} else if(compName.equalsIgnoreCase("DeleteAll")) {
 			controlDrawingEngine.setState("Deleting");
